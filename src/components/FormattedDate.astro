@@ -7,11 +7,7 @@ const { date } = Astro.props;
 ---
 
 <time datetime={date.toISOString()}>
-	{
-		date.toLocaleDateString('en-us', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-		})
+	{date.getFullYear()}-{date.getMonth().toString().padStart(2, '0')}-{
+		date.getDay().toString().padStart(2, '0')
 	}
 </time>
