@@ -24,6 +24,7 @@ import { SITE_TITLE } from '../consts';
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/projects">Projects</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
 		<div class="social-links">
@@ -125,7 +126,7 @@ import { SITE_TITLE } from '../consts';
 		}
 	}
 
-	@media (max-width: 420px) {
+	@media (max-width: 500px) {
 		nav {
 			flex-wrap: wrap;
 		}
@@ -135,6 +136,7 @@ import { SITE_TITLE } from '../consts';
 			width: 100%;
 			display: flex;
 			justify-content: center;
+			padding-bottom: 16px;
 		}
 	}
 </style>
