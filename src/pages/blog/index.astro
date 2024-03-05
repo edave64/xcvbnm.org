@@ -89,10 +89,9 @@ const posts = (await getCollection('blog')).sort(
 								<a href={`/blog/${post.slug}/`}>
 									{post.data.heroImage ? (
 										<Image
-											transition:name={post.data.heroImage.src}
 											width={128}
 											inferSize
-											src={post.data.heroImage}
+											src={post.data.heroImage as any}
 											alt=""
 										/>
 									) : (
