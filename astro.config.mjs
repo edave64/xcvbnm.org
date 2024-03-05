@@ -8,4 +8,7 @@ export default defineConfig({
 	site: 'https://example.com',
 	integrations: [mdx(), sitemap()],
 	compressHTML: false,
+	build: {
+		inlineStylesheets: 'never',
+	},
 });
