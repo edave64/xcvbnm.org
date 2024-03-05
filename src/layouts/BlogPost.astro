@@ -62,13 +62,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				<div class="hero-image">
 					{
 						heroImage && (
-							<Image
-								transition:name={heroImage.src}
-								width={1020}
-								inferSize
-								src={heroImage as any}
-								alt=""
-							/>
+							<Image width={1020} inferSize src={heroImage as any} alt="" />
 						)
 					}
 				</div>
