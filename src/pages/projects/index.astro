@@ -7,15 +7,18 @@ import { getCollection } from 'astro:content';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import FormattedDate from '../../components/FormattedDate.astro';
 
-const projects = await Promise.all((await getCollection('projects')).sort(
-	(a, b) => b.data.originalRelease.valueOf() - a.data.originalRelease.valueOf()
-).map(async post => {
-	const ret = post as (typeof post & { Content: AstroComponentFactory });
-	ret.Content = (await post.render()).Content;
-	return ret;
-}));
-
-console.log(projects);
+const projects = await Promise.all(
+	(await getCollection('projects'))
+		.sort(
+			(a, b) =>
+				b.data.originalRelease.valueOf() - a.data.originalRelease.valueOf()
+		)
+		.map(async (post) => {
+			const ret = post as typeof post & { Content: AstroComponentFactory };
+			ret.Content = (await post.render()).Content;
+			return ret;
+		})
+);
 ---
 
 <!doctype html>
@@ -30,17 +33,19 @@ console.log(projects);
 				<p>Here are some of the projects I have worked on:</p>
 				{
 					projects.map((post) => (
-						<h3>
-							{post.data.name}
-						</h3>
-						<ul>
-							<li>First release: <FormattedDate date={post.data.originalRelease} /></li>
-						</ul>
-						<p>
-							<post.Content />
-						</p>
-						)
-					)
+						<>
+							<h3>{post.data.name}</h3>
+							<ul>
+								<li>
+									First release:{' '}
+									<FormattedDate date={post.data.originalRelease} />
+								</li>
+							</ul>
+							<p>
+								<post.Content />
+							</p>
+						</>
+					))
 				}
 			</section>
 		</main>

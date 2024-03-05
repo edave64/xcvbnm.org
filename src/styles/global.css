@@ -2,18 +2,18 @@
 	--fg: #fff;
 	--bg: #181111;
 	--inner-shadow: #f8a10033;
-	--shadow: #A003;
+	--shadow: #a003;
 	--bg-back: #000;
 	--link: #ff9500;
 	--link-visited: #bb6d00;
 }
 
-@media(prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
 	:root {
 		--fg: #000;
-		--bg: #F8EEEE;
-		--shadow: #A003;
-		--bg-back: #FFF;
+		--bg: #f8eeee;
+		--shadow: #a003;
+		--bg-back: #fff;
 	}
 }
 
@@ -30,14 +30,16 @@ body {
 	margin: auto;
 	margin-top: 32px;
 	margin-bottom: 32px;
-	box-shadow: var(--shadow) 0px 0px 32px 32px, inset 0 0 64px 4px var(--inner-shadow);
+	box-shadow:
+		var(--shadow) 0px 0px 32px 32px,
+		inset 0 0 64px 4px var(--inner-shadow);
 	border-radius: 16px;
 	padding: 32px;
 	font-family: Verdana, sans-serif;
 	font-size: 16px;
 }
 
-@media(max-width: 784px) {
+@media (max-width: 784px) {
 	body {
 		width: 100%;
 		margin-top: 0px;
