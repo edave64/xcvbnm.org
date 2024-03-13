@@ -6,6 +6,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import FormattedDate from '../../components/FormattedDate.astro';
+import { Image } from 'astro:assets';
 
 const projects = await Promise.all(
 	(await getCollection('projects'))
@@ -25,6 +26,17 @@ const projects = await Promise.all(
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.project-image {
+				float: right;
+			}
+			p {
+				clear: both;
+			}
+			h3 {
+				margin-top: 42px;
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
@@ -32,20 +44,37 @@ const projects = await Promise.all(
 			<section>
 				<p>Here are some of the projects I have worked on:</p>
 				{
-					projects.map((post) => (
-						<>
+					projects.map((post) => {
+						return <>
 							<h3>{post.data.name}</h3>
 							<ul>
 								<li>
 									First release:{' '}
 									<FormattedDate date={post.data.originalRelease} />
 								</li>
+								{ post.data.repo ? (
+									<li><a href={post.data.repo}>Repo</a></li>
+								) : <></> }
+								{ post.data.home ? (
+									<li><a href={post.data.home}>Website</a></li>
+								) : <></> }
 							</ul>
 							<p>
+								{ post.data.heroImage ? (
+									<a href={post.data.heroImage.src}>
+										<Image
+											width={128}
+											inferSize
+											class="project-image"
+											src={post.data.heroImage as any}
+											alt={post.data.name}
+										/>
+									</a>
+								) : <></> }
 								<post.Content />
 							</p>
 						</>
-					))
+					})
 				}
 			</section>
 		</main>

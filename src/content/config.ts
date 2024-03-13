@@ -22,6 +22,9 @@ const projects = defineCollection({
 		z.object({
 			name: z.string(),
 			originalRelease: z.coerce.date(),
+			heroImage: image().optional(),
+			repo: z.string().optional(),
+			home: z.string().optional(),
 		}),
 });
 
