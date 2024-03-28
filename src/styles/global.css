@@ -19,7 +19,7 @@
 
 html {
 	background: var(--bg-back);
-	background: repeating-linear-gradient(var(--bg-back) 0px, var(--bg) 4px);
+	background: repeating-linear-gradient(var(--bg-back) 0px, var(--bg) 4px, var(--bg-back) 0px);
 }
 
 body {
