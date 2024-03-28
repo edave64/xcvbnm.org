@@ -33,8 +33,13 @@ const projects = await Promise.all(
 			p {
 				clear: both;
 			}
+
+			hr {
+				margin-top:26px;
+			}
+
 			h3 {
-				margin-top: 42px;
+				margin-bottom: 0px;
 			}
 
 			header {
@@ -56,36 +61,39 @@ const projects = await Promise.all(
 		<main>
 				<p>Here are some of the projects I have worked on:</p>
 				{
-					projects.map((post) => {
-						return <section>
-							<header>
-								<h3>{post.data.name}</h3>
-								{ post.data.home ? (
-									<a href={post.data.home}>Web</a>
-								) : <></> }
-								{ post.data.repo ? (
-									<a href={post.data.repo}>Repo</a>
-								) : <></> }
-							</header>
-							<p>
-								First release:{' '}
-								<FormattedDate date={post.data.originalRelease} />
-							</p>
-							<p>
-								{ post.data.heroImage ? (
-									<a href={post.data.heroImage.src}>
-										<Image
-											width={128}
-											inferSize
-											class="project-image"
-											src={post.data.heroImage as any}
-											alt={post.data.name}
-										/>
-									</a>
-								) : <></> }
-								<post.Content />
-							</p>
-						</section>
+					projects.map((post, i) => {
+						return <>
+							{ i > 0 ? <hr /> : <></> }
+							<section>
+								<header>
+									<h3>{post.data.name}</h3>
+									{ post.data.home ? (
+										<a href={post.data.home}>Web</a>
+									) : <></> }
+									{ post.data.repo ? (
+										<a href={post.data.repo}>Repo</a>
+									) : <></> }
+								</header>
+								<p>
+									First release:{' '}
+									<FormattedDate date={post.data.originalRelease} />
+								</p>
+								<p>
+									{ post.data.heroImage ? (
+										<a href={post.data.heroImage.src}>
+											<Image
+												width={128}
+												inferSize
+												class="project-image"
+												src={post.data.heroImage as any}
+												alt={post.data.name}
+											/>
+										</a>
+									) : <></> }
+									<post.Content />
+								</p>
+							</section>
+						</>
 					})
 				}
 			
