@@ -30,12 +30,10 @@ const projects = await Promise.all(
 			.project-image {
 				float: right;
 			}
-			p {
-				clear: both;
-			}
 
 			hr {
 				margin-top:26px;
+				clear: both;
 			}
 
 			h3 {
@@ -53,6 +51,10 @@ const projects = await Promise.all(
 
 			header a {
 				padding-left: 1rem;
+			}
+
+			img {
+				margin-left: 4px;
 			}
 		</style>
 	</head>
@@ -75,10 +77,6 @@ const projects = await Promise.all(
 									) : <></> }
 								</header>
 								<p>
-									First release:{' '}
-									<FormattedDate date={post.data.originalRelease} />
-								</p>
-								<p>
 									{ post.data.heroImage ? (
 										<a href={post.data.heroImage.src}>
 											<Image
@@ -90,6 +88,10 @@ const projects = await Promise.all(
 											/>
 										</a>
 									) : <></> }
+									First release:{' '}
+									<FormattedDate date={post.data.originalRelease} />
+								</p>
+								<p>
 									<post.Content />
 								</p>
 							</section>
