@@ -60,6 +60,10 @@ a:visited {
 	color: var(--link-visited);
 }
 
+a[href^="http://"]:not(.no-arrow)::after, a[href^="https://"]:not(.no-arrow)::after {
+	content: "⤤"
+}
+
 img {
 	max-width: 100%;
 	height: auto;
