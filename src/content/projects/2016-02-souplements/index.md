@@ -14,5 +14,6 @@ Among these were:
 - Quickly clearing your entire ignore list (There was a spam problem, so it frequently got filled
   by accounts that were already gone)
 - A replacement for the websites native NSFW system, that allowed selectively reshowing the
-  filtered posts and reduced loading times by actually taking these posts out of the DOM when hidden
+  filtered posts and reduced loading times by actually taking these posts out of the DOM when
+  hidden
 - Fix old youtube/vimeo/dailymotion flash embeds and replacing them with modern embeds
