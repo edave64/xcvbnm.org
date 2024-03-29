@@ -58,10 +58,10 @@ which to solve the fields mattered.
 
 I tried it out and was stunned. It suddenly rivaled all logical solvers I've written.
 
-| A traditional bruteforce alorithm                                              | The optimized bruteforce algorithm                                             |
+| A traditional bruteforce algorithm                                             | The optimized bruteforce algorithm                                             |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | <video controls src={Dumb} style="width: 100%; aspect-ratio: 1" width="512" /> | <video controls src={Smat} style="width: 100%; aspect-ratio: 1" width="512" /> | 
-| (video size 22.3MiB, 15:14 min)                                                | (video size 0,8MiB, 0:18 min)                                                  |
+| (video size 22.3MiB, 15:14 min)                                                | (video size 0.8MiB, 0:18 min)                                                  |
 | Iterations: 54843                                                              | Iterations: 1067                                                               |
 
 The optimization is quite simple: Solve the field with the least remaining possible numbers first.
@@ -77,7 +77,7 @@ are possible in all other fields.
 A basic optimization you will often find is to first fill in fields that only have one possible
 value. This speeds up solving sudokus considerably, and it just comes for free with this change of
 order. Fields that only have one possible value are solved first, and since they only have one
-possibility, it there is nothing to backtrack. Except it happens with every guess of the
+possibility, there is nothing to backtrack. Except it happens with every guess of the
 backtracker, not just once at the beginning.
 
 Fields in Sudoku are not independent of one another. Since every field solved reduces the number of
@@ -85,7 +85,7 @@ possibilities in the fields after it, fields with a lot of possible values early
 bane of backtracking, just never happen. So we are not just swapping factors.
 
 In the example shown above, the primitive solver starts with solving the cell in column 1, row 1.
-It has 5 possible values, so each guess for that field has a change of 20%. Meanwhile, the improved
+It has 5 possible values, so each guess for that field has a chance of 20%. Meanwhile, the improved
 solver first picks col 5 row 2, with two possible values. It then, across the entire solving
 process, never encounters a single field with more than two possible values. All guesses are at
 worst 50/50, and the chance that our first two fields are correct is already higher than that the
@@ -95,8 +95,8 @@ There is another way to definitively prove that they are different. There are pu
 that are designed to be difficult to brute force. The basic concept is to design the puzzle in a
 way that the correct solution is the one a solver will pick last. We can simulate such a puzzle by
 just removing the success condition from our solver. This way we have created the absolute worst
-case for the solver. And if the solvers were just iterating over same tree of possibilities just
-restructured a bit, we would expect the number of iterations to be similar.
+case for the solver. And if the solvers were just iterating over the same tree of possibilities
+just restructured a bit, we would expect the number of iterations to be similar.
 
 Using the same puzzle as before, we count the number the solve function is called:
 - The traditional version calls `solve` 84015 times.
