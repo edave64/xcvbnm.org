@@ -1,0 +1,142 @@
+---
+title: 'I have been brute forcing sudokus wrong (And so might you)'
+description: "Brute-force doesn't have to be stupid"
+pubDate: 2024-03-29
+heroImage: './header.svg'
+---
+import Dumb from './dumb.webm';
+import Smat from './smat.webm';
+
+Ever since I created my first sudoku solver, the topic has been stuck in the back of my head. It's
+a very interesting problem to optimize, with a lot of logic that isn't too hard to grasp.
+
+A common theme in different sudoku solver tutorials is that they first write a trivial backtracking
+solver, and either call it mission accomplished because technically you are getting the result at
+some point, or declare the backtracker a last resort because it's too slow to be useful, and go on
+to implement much more complicated logical strategies.
+
+Granted, this might be mostly because these tutorials are often more about learning recursion,
+backtracking, maybe python list comprehensions and the like. But I think it does the backtracking
+solver a disservice. Because just because you are checking every possible solution, doesn't mean we
+aren't allowed to think about the problem and improve our application of brute force.
+
+Typically, code in these tutorials ends up looking something like this:
+
+```py
+def solve(board):
+    free_field = first_free_field(board)
+
+    if not find:
+        return True # No more empty fields -> Done
+    
+    row, col = free_field
+
+    for i in possible_values(board, row, col):
+        board[row][col] = i
+
+        if solve(board):
+            return True
+
+    board[row][col] = 0
+    return False # We tried all possible values and none worked
+
+def first_free_field(board):
+    for row in range(9):
+        for col in range(9):
+            if board[i][j] == 0:
+                return (i, j)
+
+    return None
+
+def possible_values(board):
+    # Omitted, not important for us
+```
+
+They iterate left to right, top to bottom. While watching a youtube video about such a solver I got
+an idea for something that might possibly speed up the bruteforce solver a bit: Maybe the order in
+which to solve the fields mattered.
+
+I tried it out and was stunned. It suddenly rivaled all logical solvers I've written.
+
+| A traditional bruteforce alorithm                                              | The optimized bruteforce algorithm                                             |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| <video controls src={Dumb} style="width: 100%; aspect-ratio: 1" width="512" /> | <video controls src={Smat} style="width: 100%; aspect-ratio: 1" width="512" /> | 
+| (video size 22.3MiB, 15:14 min)                                                | (video size 0,8MiB, 0:18 min)                                                  |
+| Iterations: 54843                                                              | Iterations: 1067                                                               |
+
+The optimization is quite simple: Solve the field with the least remaining possible numbers first.
+Now, you might have one of two reactions: "Duh." or
+
+# Aren't you just swapping factors around?
+
+That was the reaction I got when I made that suggestion under said video. Basically, how do I know
+if this solution is actually faster, and doesn't just happen to pick a better path in my tests by
+sheer luck? But it's not, because the order in which you solve a sudoku influences the values that
+are possible in all other fields.
+
+A basic optimization you will often find is to first fill in fields that only have one possible
+value. This speeds up solving sudokus considerably, and it just comes for free with this change of
+order. Fields that only have one possible value are solved first, and since they only have one
+possibility, it there is nothing to backtrack. Except it happens with every guess of the
+backtracker, not just once at the beginning.
+
+Fields in Sudoku are not independent of one another. Since every field solved reduces the number of
+possibilities in the fields after it, fields with a lot of possible values early on, which are the
+bane of backtracking, just never happen. So we are not just swapping factors.
+
+In the example shown above, the primitive solver starts with solving the cell in column 1, row 1.
+It has 5 possible values, so each guess for that field has a change of 20%. Meanwhile, the improved
+solver first picks col 5 row 2, with two possible values. It then, across the entire solving
+process, never encounters a single field with more than two possible values. All guesses are at
+worst 50/50, and the chance that our first two fields are correct is already higher than that the
+first guess of the primitive solver is correct.
+
+There is another way to definitively prove that they are different. There are puzzles out there
+that are designed to be difficult to brute force. The basic concept is to design the puzzle in a
+way that the correct solution is the one a solver will pick last. We can simulate such a puzzle by
+just removing the success condition from our solver. This way we have created the absolute worst
+case for the solver. And if the solvers were just iterating over same tree of possibilities just
+restructured a bit, we would expect the number of iterations to be similar.
+
+Using the same puzzle as before, we count the number the solve function is called:
+- The traditional version calls `solve` 84015 times.
+- The optimized version calls `solve` 1429 times.
+
+Quite the difference.
+
+# Just look at it
+
+It's also just interesting to look at the visual difference between the two solvers. The standard
+solver slowly and steadily claws its way forward, and occasionally looses huge chunks and starts
+over again.
+
+The guesses of the optimized solver tend to trigger long chains of other fields only being able to
+have one value that then suddenly collapse as it finds a contradiction, so it gets quite deep into
+solving before it notices any issues. It's also not quite so all over the place as one might
+expect. If you fill in a field, you are often reducing possible values in other fields in the same
+column/row/block, so it often fills out one of these neighborhoods at a time before moving on.
+
+# Going even further
+
+This is not where the backtracking has to stop. Some solving algorithms in sudoku don't directly
+reveal the value of a field, but rather reduce the possible values of fields. So if you don't
+compute the possible values for each field every time like I have implied in the example above,
+but keep track of them separately, you can add smart solvers into the backtracking algorithm,
+instead of using one or the other.
+
+# TLDR
+
+When your algorithm is slow, it might be worth considering if there are ways to improve it, rather
+than just calling it a lost cause and doing something completely different.
+
+# A terrible anecdote to end on
+
+The examples in this post where made with my program [ku](https://github.com/edave64/ku) as a
+basis, and it implements essentially the algorithm we have discussed here. But I don't know how
+to render videos from rust, or even just rasterize images. I'm sure there is a crate that would
+have worked just fine, but what I did instead was to export tens of thousands of SVG files, since
+those are plain text and I know how to export those from rust.
+
+Then I've converted all of these SVGs into PNGs using
+[Inkscape's command line features](https://wiki.inkscape.org/wiki/Using_the_Command_Line), and then
+stitched them all together with ffmpeg.

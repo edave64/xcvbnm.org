@@ -6,10 +6,16 @@
 	--bg-back: #000;
 	--link: #ff9500;
 	--link-visited: #bb6d00;
+	--header-glow: 
+		linear-gradient(170deg, #006fff80 0, transparent 160px),
+		linear-gradient(-177deg, #A0754090 0,  transparent 120px);
 }
 
 @media (prefers-color-scheme: light) {
 	:root {
+		--header-glow: 
+			linear-gradient(170deg, #00aeffab 0, transparent 160px),
+			linear-gradient(-177deg, #ff991c90 0,  transparent 120px);
 		--fg: #000;
 		--bg: #f8eeee;
 		--shadow: #a003;
@@ -24,6 +30,7 @@ html {
 
 body {
 	background: var(--bg);
+	background-image: var(--header-glow);
 	color: var(--fg);
 	box-sizing: border-box;
 	width: 784px;

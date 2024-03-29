@@ -1,7 +1,7 @@
 ---
 title: 'Hello world'
 description: 'Hi and stuff'
-pubDate: 'Feb 29 2024'
+pubDate: 2024-02-29
 heroImage: './header.svg'
 ---
 
