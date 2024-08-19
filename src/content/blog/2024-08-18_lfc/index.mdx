@@ -24,7 +24,7 @@ If I continue to explore this format in the future, I'll update this post.
 
 # Data types
 
-## Numbers
+## Number
 
 Numbers in the format use [VLQ](https://en.wikipedia.org/wiki/Variable-length_quantity), or base
 128. The number is read byte for byte. The last 7 bits encode the number, the first bit says if the
@@ -45,7 +45,7 @@ is the EasyRPG implementation.
 
 ## String
 
-Strings are not null delimited. Instead, string values start with the [length](#Number) of the
+Strings are not null delimited. Instead, string values start with the [length](#number) of the
 string in bytes.
 
 For the encoding, the default windows codepage
@@ -64,13 +64,13 @@ The first byte of which is just the length of the file type afterwards, 10.
 
 ## Array
 
-Arrays start with the [length](#Number) of the array, directly followed by the elements. Each
-element starts with the [index](#Number) of the current element, then the actual value.
+Arrays start with the [length](#number) of the array, directly followed by the elements. Each
+element starts with the [index](#number) of the current element, then the actual value.
 
 ## Object
 
 Objects are segmented into segments that EasyRPG calls "chunks". Every chunk starts with an [index
-number](#Number), then the [length](#Number) of the payload, and then the payload.
+number](#number), then the [length](#number) of the payload, and then the payload.
 
 This is where the
 [CSV files](https://github.com/EasyRPG/liblcf/blob/505496cb0c4ad846c5e2d346aed447ecd625f7f0/generator/csv/fields.csv)
@@ -95,10 +95,10 @@ They have an indentation of 1 though, so they start with chunk `0x03`.
 The RPGMaker 2K map tree contains some meta information about the maps, such as the map name,
 encounter rates, background music, stuff like that.
 
-It starts with the [string](#String) `\x0ALcfMapTree`, as a kind of
+It starts with the [string](#string) `\x0ALcfMapTree`, as a kind of
 [magic number](https://en.wikipedia.org/wiki/File_format#Magic_number).
 
-This is followed by an [array](#Array) of
+This is followed by an [array](#array) of
 [MapInfo](https://github.com/EasyRPG/liblcf/blob/505496cb0c4ad846c5e2d346aed447ecd625f7f0/generator/csv/fields.csv#L603)
 objects.
 
