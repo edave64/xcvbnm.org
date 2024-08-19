@@ -1,0 +1,112 @@
+---
+title: 'A small (in progress) documentation of LCF formats (RPG Maker 2000/2003)'
+description: "A primer to understand EasyRPG"
+pubDate: 2024-08-18
+heroImage: './header.svg'
+---
+
+Recently I've been interested in reverse engineering binary formats. And since I've also watched
+some streams of RPG Maker 2000 games and thought that might be a good place to start without
+surprises. It wasn't quite that easy. And understanding
+[the existing open source implementation](https://github.com/EasyRPG/liblcf) (EasyRPG)
+wasn't that simple, due to it's mixture of auto-generated and template heavy code.
+
+And while I am going to refer you to some of EasyRPG's CSV files, there are some base concepts you
+need to know when you try to parse them yourself.
+
+So far, I've only looked at the MapTree, but to my understanding, they all use the same
+serialization logic. In fact, according to
+[somebody](https://community.easyrpg.org/t/proper-lcf-format-documentation/1203), they use some kind
+of default Borland Delphi Object Dump format. But I've not found any good documentation of that
+either.
+
+If I continue to 
+
+# Data types
+
+## Numbers
+
+Numbers in the format use [VLQ](https://en.wikipedia.org/wiki/Variable-length_quantity), or base
+128. The number is read byte for byte. The last 7 bits encode the number, the first bit says if the
+number continues to the next byte. Here is a pseudo code implementation:
+
+```
+VALUE = 0
+DO:
+    CURRENT_BYTE = GET_NEXT_BYTE()
+    VALUE = VALUE << 7
+    VALUE = VALUE | (CURRENT_BYTE & 0b0111_1111)
+WHILE VALUE & 0b1000_0000
+```
+
+And
+[here](https://github.com/EasyRPG/liblcf/blob/505496cb0c4ad846c5e2d346aed447ecd625f7f0/src/reader_lcf.cpp#L86)
+is the EasyRPG implementation.
+
+## String
+
+Strings are not null delimited. Instead, string values start with the [length](#Number) of the
+string in bytes.
+
+For the encoding, the default windows codepage
+([`GetACP`](https://learn.microsoft.com/de-de/windows/win32/api/winnls/nf-winnls-getacp)) for the
+current locale is used. EasyRPG uses a
+[custom table](https://github.com/EasyRPG/liblcf/blob/505496cb0c4ad846c5e2d346aed447ecd625f7f0/src/reader_util.cpp#L214)
+for non-windows systems.
+
+If we look for example at the start of an RPG_RT.lmt file, it starts with:
+
+```
+\x0ALcfMapTree
+```
+
+The first byte of which is just the length of the file type afterwards, 10.
+
+## Array
+
+Arrays start with the [length](#Number) of the array, directly followed by the elements. Each
+element starts with the [index](#Number) of the current element, then the actual value.
+
+## Object
+
+Objects are segmented into segments that EasyRPG calls "chunks". Every chunk starts with an [index
+number](#Number), then the [length](#Number) of the payload, and then the payload.
+
+This is where the
+[CSV files](https://github.com/EasyRPG/liblcf/blob/505496cb0c4ad846c5e2d346aed447ecd625f7f0/generator/csv/fields.csv)
+from EasyRPG come in.
+
+These CSV files describe the type, name and comments for each chunk in all the RPG Maker LCF files.
+
+The chunks with the index 0x00 immediately end the object. They don't have a length or payload.
+
+Chunks can be omitted if the payload is just the default value. For example, in the map tree file,
+map entries (MapInfo in the csv file) can have the chunks 0x02 parentMap, 0x03 indentation (nesting
+level in the tree) and 0x04 type.
+
+But the root node has no parentMap and an indentation of 0, so these are skipped and its first
+chunk is 0x04.
+
+Children of the root node have the parentMap 0, which is the default and as such is also skipped.
+They have an indentation of 1 though, so they start with chunk 0x03.
+
+# An example, the LcfMapTree file
+
+The RPGMaker 2K map tree contains some meta information about the maps, such as the map name,
+encounter rates, background music, stuff like that.
+
+It starts with the [string](#String) `\x0ALcfMapTree`, as a kind of
+[magic number](https://en.wikipedia.org/wiki/File_format#Magic_number).
+
+This is followed by an [array](#Array) of
+[MapInfo](https://github.com/EasyRPG/liblcf/blob/505496cb0c4ad846c5e2d346aed447ecd625f7f0/generator/csv/fields.csv#L603)
+objects.
+
+Each entry starts with an index number, and then the chucks of MapInfo object.
+
+At the end of the list, a new list starts, which only describes the order of the MapInfo objects in
+the tree. So it's just a series of numbers, without index numbers.
+
+After that, a single number that tells you which map is active, so the last map that was selected in the editor.
+
+That's the end of the file.
