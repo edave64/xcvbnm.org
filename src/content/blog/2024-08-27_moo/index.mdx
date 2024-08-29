@@ -1,0 +1,299 @@
+---
+title: 'The insanity of MooLang'
+description: "They knew they shouldn't. But luckily, they also didn't."
+pubDate: 2024-08-18
+heroImage: './header.svg'
+---
+
+Don't worry, you didn't miss anything. You're not expected to it, I made it up myself. It was born
+at a time I was still in love with dynamic programming languages in middle school. It started when
+I got really into javascript and originally just combined it with a more ruby like syntax. But I
+never really got past a few documents with ideas of how you could program something in it.
+
+Because of this very fluid non-design, it kept evolving in my head over the years. And while it's
+original ideas stuck, they grew into something that monstrous. And now it's more of a running gag
+inside my mind. But still kind of intriguing.
+
+I actually tried writing down a documentation for it and even implement it
+[on github](https://github.com/edave64/MooLang), but that's already outdated at this point. It
+still has currying, before I noticed that that's not a great idea in a dynamically typed language,
+especially if I wanted variadic functions.
+
+I will write some examples of the language here. Most stuff should be pretty self explanatory.
+Just know that `cio.out` is a `print` equivalent, assignment is done with `:`, function calls have
+parentheses, around them like in Lisp, but they can be omitted at the top level.
+
+# How it started
+
+MooLang stands for Minimal Object Oriented Language. This originally came from the prototype based
+object orientation I took from JS and Lua. I always liked the concept.
+
+Objects are just key-value pairs. If the key isn't in the object, check its prototype. Recursively.
+Essentially, that's it. No classes, interfaces, visibility, abstract, constructors, statics,
+nothing. This simplicity really appealed to me.
+
+# Scopes are objects
+
+This was the most influencial idea I added to the language later, and somewhat marked the beginning
+of the end. The point where the language stopped being a serious idea and became more of a toy.
+
+If you think about it, variable scopes are objects. You have your fancy keywords like `var` that
+set new keys in the scope object. If you are using a key that's not in your scope, it checks the
+one scope above it. Recursively. That's just... a prototype chain. Scopes are objects in a
+prototype chain.
+
+So this epiphany being had, what if we make it a rule that accessing `.self` on every object
+returns the object itself? Suddenly, you can do things like this:
+
+```moo
+self.foo: "Suddenly, a new variable!"
+cio.out foo
+```
+
+We set a key on the scope object, and a new variable just appeared. This has some curious
+consequences. Suddenly, you can pass your current scope to a different function. And using
+something like javascripts `Object.getPrototypeOf`, you can directly manipulate scopes above your
+own.
+
+```moo
+if true
+    foo: "This variable will not be visible outside of this scope!"
+    Object.getPrototypeOf(self).foo2: "This variable will be visible outside of this scope!"
+end
+
+cio.out foo2
+```
+
+I hope you are screaming already. As far as I know, this is fairly unheard of. For good reason.
+It makes tracking down where a variable comes from suddenly into a challenge. This was the point
+I knew I had made something weird. And making it weirder was no longer considered undesirable.
+
+# Open closures
+
+In languages that support closures, functions remember the scope they were defined in. And clearly,
+this now means they remember their scope object in MooLang. And since we already have established
+how scope objects can be used directly... we might as well make the closure scope of a function a
+public property of the function object itself. (Functions are defined with `do` and `end`)
+
+In the following example, the variable `val` would be hidden outside of the function in other
+languages:
+
+```moo
+counter: do
+    val: 0
+
+    return do
+        val: val + 1
+        return val
+    end
+end
+
+next = (counter)
+
+cio.out (next) # 1
+cio.out (next) # 2
+```
+
+But in MooLang, we can just:
+
+```moo
+next.closure.val: 50
+
+cio.out (next) # 51
+cio.out (next.closure.val) # 51
+```
+
+This is horrible. If you haven't noticed what we have just unleashed: Everything is now state.
+Everything is mutable. Every value of the program is accessable from anywhere. Almost everything.
+
+# Just take the stack while we are at it
+
+Something that cannot yet be accessed is variables of the functions that called you. Inside a
+function, the callers variables are not accessable. A grave injustice that must be corrected.
+
+JavaScript to the rescue. It used to have a
+[`caller`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/caller)
+feature. Every function knew the last function that called it. That was terrible, and not quite
+what we want. It doesn't work recursively.
+
+So we introduce a new variable: `caller`. Any time you call a function, its stack object gets a
+`caller` read-only property, that contains the stack object at the point where the function was
+called.
+
+Now, you can write a program that walks through the entire state of the program and e.g. increments
+every number.
+
+# Object/scope literal
+
+So since objects and scopes are the same, they can be created the same way.
+
+```moo
+propFromParent: "This is a property from the parent scope"
+
+obj: {
+    foo: "bar"
+
+    # You can reference already declared properties. Because they are just variables
+    duplicate: foo
+
+    # You can use code here. There is no special syntax
+    4 + 4
+
+    # We can access the parent scope
+    prop: propFromParent
+
+    printFoo: do
+        cio.out foo
+    end
+}
+```
+
+If you just need a temporary scope, wrap the code in curly braces. If you need an object, do the
+same, but capture the return value. It inherits the parent scope. Methods can access the properties
+of the object, because it's their closure. And we didn't even need to do some hidden `this`
+juggling like in JavaScript or `self` in Python. Or it would be, but in practice, we might still
+need to implement that anyways. Otherwise the methods of the prototype don't actually 
+
+The cons are of course that the declaring scope is now forever part of the object. We can access
+`obj.propFromParent`, and that will work.
+
+# Inheriting the objects you actually want
+
+Having it so your objects can only inherit from their scope is fairly limiting. And while it would
+would make programming an interesting challenge, that's not actually what I'm going for here.
+
+As I see it, there are two ways to do this. One that's obvious, and one that doesn't introduce
+anything new.
+
+The obvious way would be to allow the prototype of an object to be set manually. Something like
+this:
+
+```moo
+parent: {
+    foo: "bar"
+
+    Object.setPrototypeOf(self, null)
+}
+
+child: {
+    printFoo: do
+        cio.out foo
+    end
+
+    Object.setPrototypeOf(self, parent)
+}
+```
+
+Of course, setting the prototype in the object itself isn't required, but I think it looks kinda
+neat.
+
+Having a separate function `Object.setPrototypeOf` is borrowed from JavaScript. Maybe it could also
+just be a property `prototype` on the object. Which might look stranger and more prone to unwanted
+injection, but it has more symmetry with the `closure` property of functions.
+
+Speaking of, that would be the other way to do it.
+
+```moo
+parentCreator: do {
+    foo: "bar"
+} end
+
+parentCreator.closure = null
+parent = (parentCreator)
+
+childCreator: do {
+    printFoo: do
+        cio.out foo
+    end
+} end
+
+childCreator.closure = parent
+```
+
+Definitely less readable, but it requires no new concepts. For now, we'll just assume
+`Object.setPrototypeOf` exists, but also that it wouldn't strictly have to.
+
+But it leads us yet another interesting consequence.
+
+# Build in sandboxing
+
+Hidden state, is back. I didn't plan for this, it just happened. Like, in the previous chapter. If
+you've somehow paid a lot of attention, you might have noticed it.
+
+It's a bit backwards from how it usually works though. As far as I currently see, you can't stop
+someone from the outside from accessing everything in your scope. But you can limit what you may
+access yourself!
+
+```moo
+parent: {
+    foo: "bar"
+
+    Object.setPrototypeOf(self, null)
+
+    # Access to an undefined variable, since it's not in the prototype chain of our scope anymore
+    parent
+}
+```
+
+This additionally has the effect that, in the previous code examples `printFoo` would actually
+fail to execute, since `cio` isn't in scope anymore. So it would crash at that point.
+
+So you'd probably never want the prototype to actually be null. Or at least before you set it,
+you copy over everything from the parents scope you'll need.
+
+# Unifying functions and objects
+
+At this point, functions and objects are the primary concepts of the language left over. So perhaps
+we can unify some more. So, are objects functions? Or are functions objects?
+
+If we terribly simplify the concepts, both are mappings from one set of values to another.
+Functions are obviously the more powerful mapping, since it supports more than one key. But objects
+are more flexible. Or are they?
+
+If you're familiar with languages like haskell, you might be familiar with code like this:
+
+```haskell
+fac 0 = 1
+fac n = n * fac (n - 1)
+```
+
+So setting the `keys` of a function isn't unheard of. How about:
+
+```moo
+obj: do key
+    prototype key
+end
+
+(obj "key") = "value"
+```
+
+So we can do inheritance with this. Our function just calls the prototype function if the key isn't
+explicitly defined otherwise. This isn't actually that revolutionary. Ruby objects have a
+[`method_missing`](https://ruby-doc.org/core-2.6.3/BasicObject.html#method-i-method_missing), which
+is called if a method is called on an object that isn't defined. And in lua, the metatable of an
+object can define [`__index`](https://www.lua.org/pil/13.4.1.html), which is either another object
+for normal prototype inheritance, or a function that decides the value.
+
+Using a function as a base actually makes our inheritance even more powerful. You can have multiple
+inheritance. Just look up the key in one prototype, and if it's not there, use lookup in a second
+prototype.
+
+# The actual takeaway
+
+So what useful things actually came out of this? Well, conceptually not much. A lot of things this
+language tries to do would be terribly inefficient, would programming probably more difficult than
+help with it, and makes reasoning about your program much harder. In a way it's maybe more
+insidious than something like brainfuck, because it looks more normal at a first glance.
+
+Something I still really like is the base syntax. `:` for assignment instead of `=` makes a clearer
+distinction between assigning and equality testing.
+
+The lisp-like call syntax is still pretty I think. Allowing the top level expression of every line
+to skip it gets rid of the parentheses-hell lisp often causes, allows ruby like calls without any
+parentheses, and still makes it very clear where the calls are and what order they are in.
+
+Also, something I skipped here, it has a syntax for short strings: `'like_this`, with just a single
+quotation followed by a text that follows the same rule as identifiers, similar again to ruby's
+symbol literals. It gives the single quotation something point other than "double quotes, but
+single" or C's pointless character literal that still needs the closing quote, despite the fact
+it's not allowed to be more than one letter. I've used this syntax in a few other projects.
