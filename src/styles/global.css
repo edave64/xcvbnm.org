@@ -67,7 +67,7 @@ a:visited {
 	color: var(--link-visited);
 }
 
-a[href^="http://"]:not(.no-arrow)::after, a[href^="https://"]:not(.no-arrow)::after {
+a[href^="http://"]:not(.no-arrow):not(a[href^="http://xcvbnm.org"])::after, a[href^="https://"]:not(.no-arrow):not(a[href^="https://xcvbnm.org"])::after {
 	content: "⤤"
 }
 
