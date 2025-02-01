@@ -1,0 +1,156 @@
+---
+title: 'January 2025 - Month of Blender'
+description: "Doing some visual art"
+pubDate: 2025-01-31
+heroImage: './header.svg'
+draft: true
+---
+import { Image } from 'astro:assets';
+
+This year, I wanted to try something new. Actually, a lot of things new. A have a massive backlog of projects I have hardly ever touched and things I've always wanted to learn.
+
+So to address this, for each month of this year I want to pick one thing that I will do. That will be the one thing I work on. Each day, I want to make a post about what I did
+that day over on mastodon, and I guess today I've spontainiously decided to also write blog posts about it at the end of the month. Also, I have to release everything I do at
+least daily. This is to force me to produce constantly produce something and not get stuck trying to get things exactly right.
+
+As you know from the title, this month I tried to learn blender. That's a big program, but since I only have a month, I'm not planing on becoming an expert anyways. Just get
+familiar enough with it to make *something*. 
+
+Conincidentally, when I made an announcement post about this, someone made me aware of the
+["Blenduary"](https://blenderartists.org/t/new-january-daily-art-challenge-blenduary/1560953) art challange, a list of prompts for january to make one image per day.
+So this month basically ended up as: Do the [Donut tutorial](https://www.youtube.com/watch?v=B0J27sf9N1Y&list=PLjEaoINr3zgEPv5y--4MKpciLaoQYZB1Z), then make blenduary images.
+For some of them I followed some other tutorials on youtube, but later on most were just made by hand with some use of guides for specific node setups.
+
+All .blend files, assets, etc. I've produced for this are released under CC0 on github: https://github.com/edave64/2025-01-month-of-blender/tree/main/
+
+## The donut
+
+I really liked the tutorial. It gave me a good overview over all of the different parts blender offers, and there wasn't anything in there that I didn't keep on using for the
+rest of blenduary. My only issue was that he was promoting his own asset library, which was incompatible with the CC0 licence I chose for the project. Instead, I used assets
+from https://www.thebasemesh.com and https://www.blenderboom.com/, with textures from https://cc0-textures.com/.
+
+### Final render
+
+<video controls src="{Donut}" style="max-width: 100%" width="1092" alt="A rendered animation of a camera flying over 4 donuts on a plate."  />
+
+## Blenduary Results
+
+### Day 01: Ripple
+
+import Ripple from './01-ripple.png';
+
+<Image src={Ripple} alt="A render of a rough sphere. It is made up of hundreds of randomly rotated cylinders." />
+
+This image happened as a bit of an accident while working on the donut tutorial. It happened while I was trying to create the plate asset. I created a new cylinder, but
+added it to the collection used for donut sprinkles, packing hundreds of 1 meter large cylinders around the donut, turning it practically into a sphere.
+
+### Day 02: Crystals
+
+import Crystal from './02-crystals.png';
+import CrystalRedo from './02-crystals-redo.png';
+
+<Image src={Crystal} alt="A render of a cave like thing with blue, glowing crystals. There is a green light coming from around a bend." />
+
+The idea here was to create a cave with glowing crystals, with a mysterious green glow around the corner.
+
+This was the first time working with emmissive textures. Using them naively destroyed all detail in the crystals, since it's hard to have a shadow on a glowing surface.
+So they didn't look like actual objects.
+
+The cave didn't look great either, since it's essentially just a donut from the inside.
+
+<Image src={CrystalRedo} alt="A render of a cave like thing with blue, glowing crystals. There is a green light coming from around a bend." />
+
+I later created this improved version. The cave still doesn't look fantastic, but the crystals look a lot more like physical objects and the lower emmissive strength
+makes the cave look a bit less smooth.
+
+### Day 03: Workbench
+
+import Workbench from './03-workbench.png';
+import WorkbenchRedo from './03-workbench-redo.png';
+
+<Image src={Workbench} alt="A wooden table with a big block of wood being chisled. There are wood shavings on the table. One side is completely black" />
+
+My first attempt at modeling objects, destroyed by a problem with the texture. I still don't know why, but applying the normal map makes one side pitch black.
+
+<Image src={WorkbenchRedo} alt="A wooden table with a big block of wood being chisled. There are wood shavings on the table." />
+
+After I replaced the normal map with a bump map, it's still not pretty, but better.
+
+### Day 04: Spider
+
+import Spider from './04-spider.png';
+
+<Image src={Spider} alt="A render of a black, hairy spider" />
+
+My first attempt at modeling a living creature. I tried to make something similar to a jumping spider, to make it at least a little cute, so I wouldn't hate to look at it.
+Not really a spider fan. ^^'
+
+### Day 05: Celeste
+
+import Celeste from './05-celeste.png';
+
+<Image src={Celeste} alt="A blue, low-poly mountain with an orange sky and heavy fog." />
+
+I wasn't sure what to do with this prompt, so I made something vaguely inspired by the logo of the game celeste.
+
+### Day 06: Tesslate
+
+import Tesslate from './06-tesslate.png';
+
+<Image src={Tesslate} alt="A house made of large, irregularly shaped, gray pieces of stone. It has red roof tiles." />
+
+I watched some YT tutorials about making brick textures with displacement, and did a similar thing with voronoi textures. The roofing tiles are (suboptimally) generated are
+with geometry nodes, which means the base mash of this scene is actually just 7 completely flat faces.
+
+### Day 07: Portal
+
+import Portal from './07-portal.mp4'; 
+
+<video controls src={Portal} style="max-width: 100%;" alt="A camera ride through a triangular room with three doors. Every door loops back to the same position. You can see multiple iterations of the same room through the doors." loop />
+
+In recent history, Blender added a "Ray Portal BSDF" node, allowing rays that enter to be moved somewhere else. This allows for some fantastic effects, but at least from what I
+saw, the ergonomics are terrible. It can do a lot. It can keep a static angle, to be used as a flat image that's rendered from somewhere else, like a TV, or a dynamic angle for
+a portal like effect, it can scale up and down or rotate, or use multiple target locations on one texture, it's pretty neat.
+
+The problem is that this means the node leaves all the math burden to you, and the documentation did not help me much. The
+[documentation](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/ray_portal.html) gives you a sample node setup with nodes for "Location of Portal Target" and
+"Rotation of Portal Target", but those are lies. Changing the location changes rotation and rotation, and rotation is a static value that seems very unrelated to the actual
+rotation of the portal.
+
+I made this animation through pure trial and error.
+
+### Day 08: Orrery
+
+import Orrery from './08-orrery.mp4'; 
+
+<video controls src={Orrery} style="max-width: 100%;" alt="An animation of a camera flying around an orrery with a sun, 3 planets and 5 moons orbiting around each other." />
+
+My first attempt at a more complex chorreography. It features keyframe animation outside of just location, rotation and scale, and a hand-off between two cameras. It was also the
+first time I tried working with the eevee render, simply because I didn't have time to render it otherwise. It's surprisingly picky.
+
+### Day 09: Aurora
+
+import Aurora from './09-aurora.mp4';
+import AuroraJoke from './09-aurora-joke.png';
+
+<video controls src={Aurora} style="max-width: 100%;" alt="A snowy landscape under a dark blue night sky with an aurora borealis and some clouds/fog." />
+
+Made mostly by following a tutorial, but I also learned how to make a more complex animated sky texture.
+
+The effect doesn't look bad in itself, I think it's mostly the positioning of the lines in the sky (and the unconvincing snow) that I'd like to revisit, but for now, I'll leave it
+as is, and hide it by keeping it entirely localized within my kitchen.
+
+<Image src={AuroraJoke} alt="A door that is ajar with a strong orange glow behind it, modeled after the 'Steamed Hams' scene in the Simpsons" />
+
+(Yes, this is part of this days submission)
+
+### Day 10: Diffuse
+
+import Diffuse from './10-diffuse-redo.png';
+
+<Image src={Diffuse} alt="A cat viewed through a pair of glasses. Everything outside the glasses is clear, everything though the glasses is blurry." />
+
+NOTE: The cat is just a jpeg, I did not suddenly graduated to photorealistic cats.
+
+This was definitly more of a case of wanting to learn something and fitting it to the theme. I used this to learn both to use curves for modeling and using cryptomasks in the
+compositor. Also, this is the fixed version. Originally, I rendered it with far to little light for some reason and didn't notice at the time.
