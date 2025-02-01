@@ -10,28 +10,30 @@ import { Image } from 'astro:assets';
 This year, I wanted to try something new. Actually, a lot of things new. A have a massive backlog of projects I have hardly ever touched and things I've always wanted to learn.
 
 So to address this, for each month of this year I want to pick one thing that I will do. That will be the one thing I work on. Each day, I want to make a post about what I did
-that day over on mastodon, and I guess today I've spontainiously decided to also write blog posts about it at the end of the month. Also, I have to release everything I do at
-least daily. This is to force me to produce constantly produce something and not get stuck trying to get things exactly right.
+that day over on mastodon, and I guess today I've spontaneously decided to also write blog posts about it at the end of the month. Also, I have to release everything I do at
+least daily. This is to force me to constantly produce something and not get stuck trying to get things exactly right.
 
-As you know from the title, this month I tried to learn blender. That's a big program, but since I only have a month, I'm not planing on becoming an expert anyways. Just get
+As you know from the title, this month I tried to learn blender. That's a big program, but since I only have a month, I'm not planning on becoming an expert anyway. Just get
 familiar enough with it to make *something*. 
 
-Conincidentally, when I made an announcement post about this, someone made me aware of the
-["Blenduary"](https://blenderartists.org/t/new-january-daily-art-challenge-blenduary/1560953) art challange, a list of prompts for january to make one image per day.
+Coincidentally, when I made an announcement post about this, someone made me aware of the
+["Blenduary"](https://blenderartists.org/t/new-january-daily-art-challenge-blenduary/1560953) art challenge, a list of prompts for january to make one image per day.
 So this month basically ended up as: Do the [Donut tutorial](https://www.youtube.com/watch?v=B0J27sf9N1Y&list=PLjEaoINr3zgEPv5y--4MKpciLaoQYZB1Z), then make blenduary images.
-For some of them I followed some other tutorials on youtube, but later on most were just made by hand with some use of guides for specific node setups.
+For some of them, I followed some other tutorials on YouTube, but later on, most were just made by hand with some use of guides for specific node setups.
 
-All .blend files, assets, etc. I've produced for this are released under CC0 on github: https://github.com/edave64/2025-01-month-of-blender/tree/main/
+All .blend files, assets, etc. I've produced for this are released under CC0 on [GitHub](https://github.com/edave64/2025-01-month-of-blender/tree/main/).
 
 ## The donut
 
-I really liked the tutorial. It gave me a good overview over all of the different parts blender offers, and there wasn't anything in there that I didn't keep on using for the
+import Donut from './donut.webm';
+
+I really liked the tutorial. It gave me a good overview over all the different parts blender offers, and there wasn't anything in there that I didn't keep on using for the
 rest of blenduary. My only issue was that he was promoting his own asset library, which was incompatible with the CC0 licence I chose for the project. Instead, I used assets
-from https://www.thebasemesh.com and https://www.blenderboom.com/, with textures from https://cc0-textures.com/.
+from [thebasemesh.com](https://www.thebasemesh.com) and [blenderboom.com](https://www.blenderboom.com/), with textures from [cc0-textures.com](https://cc0-textures.com/).
 
 ### Final render
 
-<video controls src="{Donut}" style="max-width: 100%" width="1092" alt="A rendered animation of a camera flying over 4 donuts on a plate."  />
+<video controls src={Donut} style="max-width: 100%" alt="A rendered animation of a camera flying over 4 donuts on a plate." muted />
 
 ## Blenduary Results
 
@@ -39,7 +41,7 @@ from https://www.thebasemesh.com and https://www.blenderboom.com/, with textures
 
 import Ripple from './01-ripple.png';
 
-<Image src={Ripple} alt="A render of a rough sphere. It is made up of hundreds of randomly rotated cylinders." />
+<Image src={Ripple} alt="A render of a rough sphere. It is made up of hundreds of randomly rotated cylinders." loading="lazy" />
 
 This image happened as a bit of an accident while working on the donut tutorial. It happened while I was trying to create the plate asset. I created a new cylinder, but
 added it to the collection used for donut sprinkles, packing hundreds of 1 meter large cylinders around the donut, turning it practically into a sphere.
@@ -49,18 +51,18 @@ added it to the collection used for donut sprinkles, packing hundreds of 1 meter
 import Crystal from './02-crystals.png';
 import CrystalRedo from './02-crystals-redo.png';
 
-<Image src={Crystal} alt="A render of a cave like thing with blue, glowing crystals. There is a green light coming from around a bend." />
+<Image src={Crystal} alt="A render of a cave like thing with blue, glowing crystals. There is a green light coming from around a bend." loading="lazy" />
 
 The idea here was to create a cave with glowing crystals, with a mysterious green glow around the corner.
 
-This was the first time working with emmissive textures. Using them naively destroyed all detail in the crystals, since it's hard to have a shadow on a glowing surface.
+This was the first time working with emissive textures. Using them naively destroyed all details in the crystals, since it's hard to have a shadow on a glowing surface.
 So they didn't look like actual objects.
 
 The cave didn't look great either, since it's essentially just a donut from the inside.
 
-<Image src={CrystalRedo} alt="A render of a cave like thing with blue, glowing crystals. There is a green light coming from around a bend." />
+<Image src={CrystalRedo} alt="A render of a cave like thing with blue, glowing crystals. There is a green light coming from around a bend." loading="lazy" />
 
-I later created this improved version. The cave still doesn't look fantastic, but the crystals look a lot more like physical objects and the lower emmissive strength
+I later created this improved version. The cave still doesn't look fantastic, but the crystals look a lot more like physical objects and the lower emissive strength
 makes the cave look a bit less smooth.
 
 ### Day 03: Workbench
@@ -68,11 +70,11 @@ makes the cave look a bit less smooth.
 import Workbench from './03-workbench.png';
 import WorkbenchRedo from './03-workbench-redo.png';
 
-<Image src={Workbench} alt="A wooden table with a big block of wood being chisled. There are wood shavings on the table. One side is completely black" />
+<Image src={Workbench} alt="A wooden table with a big block of wood being chiseled. There are wood shavings on the table. One side is completely black" loading="lazy" />
 
 My first attempt at modeling objects, destroyed by a problem with the texture. I still don't know why, but applying the normal map makes one side pitch black.
 
-<Image src={WorkbenchRedo} alt="A wooden table with a big block of wood being chisled. There are wood shavings on the table." />
+<Image src={WorkbenchRedo} alt="A wooden table with a big block of wood being chiseled. There are wood shavings on the table." loading="lazy" />
 
 After I replaced the normal map with a bump map, it's still not pretty, but better.
 
@@ -80,7 +82,7 @@ After I replaced the normal map with a bump map, it's still not pretty, but bett
 
 import Spider from './04-spider.png';
 
-<Image src={Spider} alt="A render of a black, hairy spider" />
+<Image src={Spider} alt="A render of a black, hairy spider" loading="lazy" />
 
 My first attempt at modeling a living creature. I tried to make something similar to a jumping spider, to make it at least a little cute, so I wouldn't hate to look at it.
 Not really a spider fan. ^^'
@@ -89,32 +91,33 @@ Not really a spider fan. ^^'
 
 import Celeste from './05-celeste.png';
 
-<Image src={Celeste} alt="A blue, low-poly mountain with an orange sky and heavy fog." />
+<Image src={Celeste} alt="A blue, low-poly mountain with an orange sky and heavy fog." loading="lazy" />
 
-I wasn't sure what to do with this prompt, so I made something vaguely inspired by the logo of the game celeste.
+I wasn't sure what to do with this prompt, so I made something vaguely inspired by the logo of the game celeste. This
+was my first time using the A.N.T. landscape plugin.
 
-### Day 06: Tesslate
+### Day 06: Tessellate
 
-import Tesslate from './06-tesslate.png';
+import Tessellate from './06-tesslate.png';
 
-<Image src={Tesslate} alt="A house made of large, irregularly shaped, gray pieces of stone. It has red roof tiles." />
+<Image src={Tessellate} alt="A house made of large, irregularly shaped, gray pieces of stone. It has red roof tiles." loading="lazy"  />
 
-I watched some YT tutorials about making brick textures with displacement, and did a similar thing with voronoi textures. The roofing tiles are (suboptimally) generated are
-with geometry nodes, which means the base mash of this scene is actually just 7 completely flat faces.
+I watched some YT tutorials about making brick textures with displacement, and did a similar thing with voronoi textures. The roofing tiles are (suboptimally) generated
+with geometry nodes, which means the base mash of this scene is actually just seven completely flat faces.
 
 ### Day 07: Portal
 
 import Portal from './07-portal.mp4'; 
 
-<video controls src={Portal} style="max-width: 100%;" alt="A camera ride through a triangular room with three doors. Every door loops back to the same position. You can see multiple iterations of the same room through the doors." loop />
+<video controls src={Portal} style="max-width: 100%;" alt="A camera ride through a triangular room with three doors. Every door loops back to the same position. You can see multiple iterations of the same room through the doors." loop muted />
 
 In recent history, Blender added a "Ray Portal BSDF" node, allowing rays that enter to be moved somewhere else. This allows for some fantastic effects, but at least from what I
-saw, the ergonomics are terrible. It can do a lot. It can keep a static angle, to be used as a flat image that's rendered from somewhere else, like a TV, or a dynamic angle for
+saw, the ergonomics are terrible. It can do a lot. It can keep a static angle, to be used as a flat image rendered from somewhere else, like a TV, or a dynamic angle for
 a portal like effect, it can scale up and down or rotate, or use multiple target locations on one texture, it's pretty neat.
 
 The problem is that this means the node leaves all the math burden to you, and the documentation did not help me much. The
 [documentation](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/ray_portal.html) gives you a sample node setup with nodes for "Location of Portal Target" and
-"Rotation of Portal Target", but those are lies. Changing the location changes rotation and rotation, and rotation is a static value that seems very unrelated to the actual
+"Rotation of Portal Target", but those are lies. Changing the location changes location and rotation, and rotation is a static value that seems very unrelated to the actual
 rotation of the portal.
 
 I made this animation through pure trial and error.
@@ -123,34 +126,269 @@ I made this animation through pure trial and error.
 
 import Orrery from './08-orrery.mp4'; 
 
-<video controls src={Orrery} style="max-width: 100%;" alt="An animation of a camera flying around an orrery with a sun, 3 planets and 5 moons orbiting around each other." />
+<video controls src={Orrery} style="max-width: 100%;" alt="An animation of a camera flying around an orrery with a sun, 3 planets and 5 moons orbiting around each other."  muted />
 
-My first attempt at a more complex chorreography. It features keyframe animation outside of just location, rotation and scale, and a hand-off between two cameras. It was also the
-first time I tried working with the eevee render, simply because I didn't have time to render it otherwise. It's surprisingly picky.
+My first attempt at a more complex choreography. It features keyframe animation outside of just location, rotation and scale, and a hand-off between two cameras. It was also the
+first time I tried working with the eevee renderer, simply because I didn't have time to render it otherwise. It's surprisingly picky.
 
 ### Day 09: Aurora
 
 import Aurora from './09-aurora.mp4';
 import AuroraJoke from './09-aurora-joke.png';
 
-<video controls src={Aurora} style="max-width: 100%;" alt="A snowy landscape under a dark blue night sky with an aurora borealis and some clouds/fog." />
+<video controls src={Aurora} style="max-width: 100%;" alt="A snowy landscape under a dark blue night sky with an aurora borealis and some clouds/fog." muted />
 
 Made mostly by following a tutorial, but I also learned how to make a more complex animated sky texture.
 
-The effect doesn't look bad in itself, I think it's mostly the positioning of the lines in the sky (and the unconvincing snow) that I'd like to revisit, but for now, I'll leave it
-as is, and hide it by keeping it entirely localized within my kitchen.
+The effect doesn't look bad in itself. I think it's mostly the positioning of the lines in the sky (and the unconvincing snow) that I'd like to revisit.
+However, for now, I'll leave it as is, and hide it by keeping it entirely localized within my kitchen.
 
-<Image src={AuroraJoke} alt="A door that is ajar with a strong orange glow behind it, modeled after the 'Steamed Hams' scene in the Simpsons" />
+<Image src={AuroraJoke} alt="A door that is ajar with a strong orange glow behind it, modeled after the 'Steamed Hams' scene in the Simpsons" loading="lazy" />
 
-(Yes, this is part of this days submission)
+(Yes, this is part of this day's submission)
 
 ### Day 10: Diffuse
 
 import Diffuse from './10-diffuse-redo.png';
 
-<Image src={Diffuse} alt="A cat viewed through a pair of glasses. Everything outside the glasses is clear, everything though the glasses is blurry." />
+<Image src={Diffuse} alt="A cat viewed through a pair of glasses. Everything outside the glasses is clear, everything though the glasses is blurry." loading="lazy" />
 
-NOTE: The cat is just a jpeg, I did not suddenly graduated to photorealistic cats.
+NOTE: The cat is just a jpeg, I did not suddenly graduate to photorealistic cats.
 
-This was definitly more of a case of wanting to learn something and fitting it to the theme. I used this to learn both to use curves for modeling and using cryptomasks in the
+This was definitely more of a case of wanting to learn something and fitting it to the theme. I used this to learn both to use curves for modeling and using cryptomasks in the
 compositor. Also, this is the fixed version. Originally, I rendered it with far to little light for some reason and didn't notice at the time.
+
+### Day 11: Backpack
+
+import Backpack from './11-backpack.png';
+
+<Image src={Backpack} alt="A very simple brown backpack, with a top lid held shut by two cloth strips and metal buckles." loading="lazy" />
+
+More modeling practice. It looks a bit wonky, but not terrible, I'd say. Something that can be hard to see is the mesh bottle holder on the side. Definitely could use some better
+lighting.
+
+Also difficult to see: The procedural material for the metal actually has some surface imperfections.
+
+### Day 12: Vortex
+
+import Vortex from './12-vortex.webm';
+
+<video controls src={Vortex} style="max-width: 100%;" alt="A tornado of lollipops, each with a spiral pattern, circleing around a large lollipop in the middle." muted />
+
+Something more goofy. I just tried to make a lot of spirals, in geometry nodes for the tornado, in shaders for the lollies and their sticks, and in animation with the camera.
+
+### Day 13: Hourglass
+
+import Hourglass from './13-hourglass.png';
+
+<Image src={Hourglass} alt="An hourglass with sand ran partway through." loading="lazy" />
+
+For this, I mostly directly followed a tutorial. It's actually a water simulation with its particles rendered as points. You can see that it doesn't quite behave like sand. It
+doesn't pile up in the middle. Not sure if you can increase friction in a fluid. Maybe viscosity?  ¯\\\_(ツ)\_/¯
+
+This is the point where I start to really like the renders produced.
+
+### Day 14: Artefact
+
+import Artefact from './14-artefact.png';
+
+<Image src={Artefact} alt="A render of the blender default cube, but with extreme chromatic aberration and lens distortion effects." loading="lazy" />
+
+I was sick that day, so just quickly through the default cube through way too much lens distortion.
+
+### Day 15: Embroidery
+
+import Embroidery from './15-embroidery.mp4';
+import EmbroideryStatic from './15-embroidery.png';
+
+<video controls src={Embroidery} style="max-width: 100%;" alt="A rendered video of an embroidery hoop with the edges of a rotating cube stitched onto it." loop muted />
+
+This was my first try to make some more complex geometry nodes without following a tutorial. The node setup can squish any object onto the canvas. I tried to also cull back faces,
+but it always removed too much.
+
+<Image src={EmbroideryStatic}  alt="An embroidery hoop with the threads forming suzanne, the blender monkey head." loading="lazy" />
+
+### Day 16: Kaleidoscope
+
+import Kaleidoscope from './16-kaleidoscope.mp4';
+import KaleidoscopeSimplified from './16-kaleidoscope-simplified.webm';
+import KaleidoscopeTriangle from './16-kaleidoscope-triangle.webm';
+
+<video controls src={Kaleidoscope} style="max-width: 100%;" alt="A render of a bunch of random colored objects in a kaleidoscope." loop muted />
+
+I didn't know how kaleidoscopes actually work. So I watched a segment on "How it's made", replicated that, and it just worked! It was pretty inefficient though. The many
+internal reflections means you have to increase the max reflections in cycles, making it a lot slower. Also, it couldn't work in the Eevee renderer like this.
+
+So I made another attempt without any mirrors. Instead, it renders the whole scene of random objects with Eevee, then uses the compositor to repeat a single slice of it across the whole
+picture:
+
+<video controls src={KaleidoscopeSimplified} style="max-width: 100%;" alt="A render of a bunch of random colored objects in a kaleidoscope." loop muted />
+
+It's almost silly how much faster this rendered. But it also left me very disappointed in blender's compositor. It seems incredibly weak compared to blender's other node graphs.
+
+My specific gripe was with box mask nodes. For some reason, the height of the box mask is set as a fraction of the width, while the Y coordinate is a fraction of the height. So a
+position of 0.5 0.5 is exactly centered based on the size and aspect ratio of the input image; a size of 1 1 is a square, regardless of aspect ratio.
+
+I could work around this, if those where inputs. But no, box masks positions are set fixed in the node, without any inputs for noodles. So I can't use math nodes to still use
+proper nodes. And even if I could, it would be harder than it should, because AFAIK you cannot read the size of the current image. You have to hardcode it, and if you ever render
+at a different resolution, your masks will be messed up.
+
+I also found another [how-to video](https://youtu.be/Cmqvz42GfJI?t=265) for a kaleidoscope with three mirrors and tried that out. It's less cool than the one on YT, but still neat.
+
+<video controls src={KaleidoscopeTriangle} style="max-width: 100%;" alt="A triangular kaleidoscope with internal strips that light up in different colors." loop muted />
+
+### Day 17: Mirage
+
+import Mirage from './17-mirage.png';
+
+<Image src={Mirage}  alt="A render of a desert landscape with heat haze and parts of the floor that reflect the sky and look similar to water." loading="lazy" />
+
+I tried to improve the landscape generation over the aurora picture and experimented with a refraction shader and some more advanced shading setups for the reflective parts of the
+sand.
+
+### Day 18: Photon
+
+import Photon from './18-photon.png';
+
+<Image src={Photon}  alt="A box with a light source and two slits, projecting an interference pattern on a wall." loading="lazy" />
+
+A [double-slit experiment](https://en.wikipedia.org/wiki/Double-slit_experiment).
+Turns out, Blender doesn't simulate quantum physics. Luckily, I could fake it using the recent light linking feature and an area lamp with shader nodes.
+
+### Day 19: Terrarium
+
+import Terrarium from './19-terrarium.png';
+
+<Image src={Terrarium}  alt="Earth, floating in a terrarium on a table" loading="lazy" />
+
+I'm still not completely sure how best to model the vents at the top. The way I did it completely destroyed the topology, so I had to redo it, but in the final render you can't
+even really see it.
+
+The images for this where all from a [NASA website](https://visibleearth.nasa.gov/), but I just didn't figure out how to navigate that page. I found them on Google and Wikimedia
+Commons, which all linked back to the same website.
+
+### Day 20: Beacon
+
+import Beacon from './20-beacon.png';
+
+<Image src={Beacon} alt="An array of radio telescopes" loading="lazy" />
+
+I experimented with volume scattering in this one, and really like the result.
+
+### Day 21: Timeline
+
+import Timeline from './21-timeline.webm';
+
+<video controls src={Timeline} style="max-width: 100%;" alt="An animation of a sphere crashing into a tower of three cubes. After the animation is finished, it reverses partway, the camera rotates 360°, then finishes reversing" loop muted />
+
+As far as I know, you can't reverse a physics simulation in blender.
+
+### Day 22: Abyss
+
+import Abyss from './22-abyss.png';
+
+<Image src={Abyss} alt="A render of an ocean. Diagonally, the ground can be seen, that suddenly stops and goes into a bottomless ocean instead." loading="lazy" />
+
+This one was kinda disappointing. The idea was a view of an ocean where the ground visible through the water suddenly gives way to a dark chasm.
+
+I'm not sure what I expected that to look like, I imagined something unnerving. Instead, it's just blue.
+
+### Day 23: Chef
+
+import Chef from './23-chef.png';
+
+<Image src={Chef} alt="A simple chef figure with a capsule body, sphere hands and head, an apron and a chefs hat." loading="lazy" />
+
+My first render of a person, even if it's more of a figure. I just wanted to model the hat, the rest is something of an afterthought.
+
+### Day 24: Wanderer
+
+import Wanderer from './24-wanderer.png';
+
+<Image src={Wanderer} alt="A sailing stone in a desert with a trail in the hard ground below it." loading="lazy" />
+
+In case you don't know, this is a [sailing stone](https://en.wikipedia.org/wiki/Sailing_stones), a rock that seemingly moves on its own, leaving a track in the ground behind it.
+
+### Day 25: Mermaid
+
+import Mermaid from './25-mermaid.png';
+import MermaidNude from './25-mermaid-nude.png';
+
+<Image src={Mermaid} alt="A render of a seal on a rock in an ocean" loading="lazy" />
+
+This was my most complex model so far, and I had some trouble to understand seal anatomy, especially how their feet work. But most of the complexity was in the face, which then
+became fully covered by hair. This was also the first time I used LoopTools, which I can only recommend for modeling.
+
+<Image src={MermaidNude} alt="The same rendered seal as in the previous pose, but without any body hair. Details around mouth, nose and ear have become visible, and the wiskers are easier to see." loading="lazy" />
+
+### Day 26: Turtle
+
+import Turtle from './26-turtle.png';
+
+<Image src={Turtle} alt="A render of a turtle in front of a shore line on the beach." loading="lazy" />
+
+Another exercise in animal modeling. The shading of the shell is entirely flat, all the detail is modeled.
+
+### Day 27: Cascade
+
+import Cascade from './27-cascade.png';
+import CascadeRedo from './27-cascade-redo.png';
+
+<Image src={Cascade} alt="A render of water flowing like a waterfall into a square, dark hole" loading="lazy" />
+
+This was my first time working with the foam and spray particles of the blender water simulation. It's also a bit of a revisit of the concept of "Abyss", only with an actual
+bottomless pit in the ocean. My computer was really struggling with this image, since I didn't yet figure out how to stop the particles from rendering in the blender viewport,
+slowing the tool to a crawl and even crashing it on occasion.
+
+Once I figured that out, I could redo it with a larger simulation and higher resolution:
+
+<Image src={CascadeRedo} alt="A render of water flowing like a waterfall into a dark hole" loading="lazy" />
+
+### Day 28: Orbit
+
+import Orbit from './28-orbit.png';
+
+<Image src={Orbit} alt="A (incomplete) render of a satellite" loading="lazy" />
+
+This is a tragic victim of this entire project. Blenduary wants me to make one render a day, and my own theme system demands I move on now. So this image will remain
+incomplete for the time being. It's supposed to be NASA's Solar Dynamics Observatory (Just the first NASA one I randomly clicked on in [Satellite Explorer](https://geoxc-apps.bd.esri.com/space/satellite-explorer/))
+
+I spend most of the time making the hex pattern for the solar cells, and the model remains a bit barren. Also, lighting in space is difficult.
+
+### Day 29: Monochromatic
+
+import Monochromatic from './29-monochromatic.png';
+
+<Image src={Monochromatic} alt="A render of an old desktop computer. It's lying on it's side with a monitor on top. It has 2 5¼ inch floppy drives.  The monitor displays a monocromatic yellow version of itself" loading="lazy" />
+
+This was maybe also influenced by the next topic, "retro". Originally, I just wanted the computer to be illuminated by the floppy drive LEDs, like a very close up look with
+everything just being softly illuminated at the edges by red color. I didn't manage to make that work, so I put a monochrome monitor on top, displaying its own render. It
+might have been fun to use a ray portal to make it render itself infinitely, but they were too much of a haste last time.
+
+The PC is vaguely based on the IBM XT, although I'm pretty sure the proportions are off.
+
+### Day 30: Retro
+
+import Retro from './30-retro.mp4';
+
+<video controls src={Retro} style="max-width: 100%;" alt="A rendered video of an audio cassette with some of the tape spilling out.  The right reel spins, pulling the tape back into the cassete. Once the tape is back in the cassete, the left reel begins to turn." muted />
+
+Back to working with curves and geometry nodes. It's not really physically accurate; that's not how pulling on tape works. It also can't handle the curve overlapping itself.
+I know simulations with geometry nodes are possible, that might be something worth looking into at some point.
+
+### Day 31: Blender
+
+import Blender from './31-blender.png';
+
+<Image src={Blender} alt="The blender default cube rendered in cycles." loading="lazy" />
+
+I know it's lazy, but what could be more representative of blender than the default cube. Maybe a default cube rendered in default settings? Ehh... This one is rendered with
+16384 samples in cycles, just so at least my computer had to work for this one :P
+
+## Conclusion
+
+I'm still not completely sure if blenduary was the best idea. Sure, it gave me a constant stream of new challenges, but it might also have been cool to work on some larger
+projects over the month. But I don't regret participating. I probably wouldn't have tried as much stuff without it.
+
+At the beginning of this month, I wouldn't have believed some of the images I went on to produce. I'm really proud, and even if the rest of this year were not to have the same
+success, this first month already made it totally worth it. :)
