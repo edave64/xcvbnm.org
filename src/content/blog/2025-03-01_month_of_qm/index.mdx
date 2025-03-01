@@ -1,0 +1,79 @@
+---
+title: 'February 2025 - Month of Qwick Maffs'
+description: "Upkeep of a simple project"
+pubDate: 2025-03-01
+heroImage: './header.svg'
+draft: false
+---
+import { Image } from 'astro:assets';
+import QmTest from './qm-test.astro';
+
+Qwick Maffs is a project I started a few years ago. The idea was that inputs for numeric values in progams should
+always support simple math. Having to open a calculator just to quickly get `pi / 6` for some angle value is annoying.
+
+<QmTest />
+
+So, I created qwick-maffs to make that really simple, but pretty soon abandoned it once it functioned.
+
+As part of my project to dedicate every month this year to some specific topic, I picked the shortest month to fix this
+project up a bit.
+
+# Added custom operators
+
+The old version had a hard coded list of operators. This puts a fairly hard limit on its potential, so my first task was
+to address that.
+
+I ended up implementing a generic algorithm for operator precedence parsing called
+[Shunting yard](https://en.wikipedia.org/wiki/Shunting_yard_algorithm). It has a couple of quirks, since it just
+converts infix notation to reverse polish notation. So it also allows expressions like `4 4 +`. It's probably possible
+to prevent that, but I don't really see the point. Spitting out an error seems like it would just be a disservice to
+the user in our specific use case.
+
+The configuration object can now add or completely replace operators and allows configuring preference, associativity
+and implementation. They can either be infix, prefix or suffix (I think it should be post-fix, but don't really care)
+
+# Added constants and functions
+
+Before, qwick-maffs could only evaluate numbers and operators. Now it supports customizable constants and functions.
+After the parser rewrite, adding these was fairly trivial.
+
+# Adding units
+
+This was one of the projects I wanted to do that didn't pan out.
+[The code is available](https://github.com/edave64/qwick-maffs/pull/11), but more janky than I'm comfortable with.
+Adding units correctly would probably require adding understanding of the units to the operators, which would probably
+balloon the complexity more than I want. E.g. `5m + 6m` interacts differently with units than `5m * 6m`, and I don't
+even know if `5m ^ 6m` is a thing at all.
+
+If someone really wants to use the system, they can fork that branch.
+
+# Migrating to TypeScript
+
+Before, qwick-maffs proudly had zero dependencies. In theory. In practice, it already had dependencies on tooling like
+jest and prettier, and used a custom tiny build script to output esm, commonjs and a version that exports into the
+global namespace.
+
+The downside was that it didn't export any type info, had to use the horribly ugly jsdoc syntax, and I had to remember
+to re-run the build script before running tests.
+
+So when I set out to implement units, I first moved to TypeScript for my own sanity. Building just uses tsc, and vitest
+was used for testing.
+
+It still maintains 0 runtime dependencies.
+
+# Bindings for vue
+
+Originally I planned to give multiple framework bindings, but I only had time for the one I'm personally familiar with,
+[vue]().
+
+That said, I never made a vue component library before, so this was also a learning experience. Using vite's library
+mode was not terrible, but not trivial either. I'm still not sure why it insisted on including dependencies, I only
+know that a plugin fixed it.
+
+# Conclusion
+
+While I definitely learned things, it was a lot less than last month. I started to lose motivation partway through
+and even started to skip a few days. It didn't help, of course, that there is nothing really to show of, so nobody else
+cared either.
+
+But it's nice to know that this project nobody uses is now in slightly better shape. :P

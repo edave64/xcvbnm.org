@@ -1,0 +1,128 @@
+<!-----
+Would be amazing if I didn't need an astro component here, but mdx freaks out with script tags???
+--- -->
+<input id="qm-input" />
+<p id="qm-error"></p>
+<script>
+	import { bind } from './qm/input';
+	import { Errors } from './qm/index';
+
+	const typingTimeout = 50;
+	const preResultTimeout = 1000;
+	const postResultTimeout = 2000;
+
+	const input = bind(document.getElementById('qm-input') as HTMLInputElement, {
+		onError(error) {
+			let text = `ERROR: `;
+			switch (error.error) {
+				case Errors.UnbalancedParenthesis:
+					text += 'Unbalanced parenthesis';
+					break;
+				case Errors.UnexpectedSymbol:
+					text += `Unexpected symbol '${error.region[1]}'`;
+					break;
+				case Errors.IncorrectNumberOfParameters:
+					text += 'Incorrect number of parameters';
+					break;
+				case Errors.MultipleNumbers:
+					text += 'Multiple unconnected numbers (Did you forget an operator?)';
+					break;
+				case Errors.NoNumbers:
+					text += 'The operation resulted in no numeric values';
+					break;
+				default:
+					text += 'Unknown error';
+					break;
+			}
+
+			text += ` at position ${error.pos + 1}: ${error.region[0]}<u>${error.region[1]}</u>${error.region[2]}`;
+
+			errors.innerHTML = text;
+		},
+		onValueChange: (val) => {
+			errors.innerHTML = '';
+		},
+		onUndo: () => {
+			errors.innerHTML = '';
+		},
+	});
+	const examples = [
+		'3 + 5 * 2',
+		'10 - 4 / 2',
+		'(7 + 3) * 2',
+		'4 ^ 2 + 3 * 5',
+		'pi * 3 ^ 2',
+		'sin(30) + cos(60)',
+		'2 * (5 + 3) - 4',
+		'10 / (2 + 3)',
+		'pi * 4 + 2',
+		'sin(45) * cos(45)',
+		'(12 - 4) * 2 + 5',
+		'3 ^ 3 - 2 * 7',
+		'pi * (2 ^ 2 + 3)',
+		'sin(60) * 2 + cos(30)',
+		'(8 + 2) * (3 - 1)',
+		'pi * 5 - 2 ^ 4',
+		'4 * (3 + 2) - 10 / 2',
+	];
+	let currentExample = -1;
+	let cancel: null | (() => void) = null;
+
+	input.addEventListener(
+		'focus',
+		() => {
+			cancel?.();
+		},
+		true
+	);
+
+	input.addEventListener('blur', () => {
+		if (input.value === '') {
+			resume();
+		}
+	});
+
+	const errors = document.getElementById('qm-error')!;
+	input.addEventListener('qmerror', (error) => {});
+
+	function resume() {
+		currentExample++;
+		currentExample = currentExample % examples.length;
+		input.value = '';
+		errors.innerHTML = '';
+		const example = examples[currentExample];
+
+		const intervalId = window.setInterval(() => {
+			if (input.value.length < example.length) {
+				input.value += example[input.value.length];
+			} else {
+				clearInterval(intervalId);
+				const preResult = setTimeout(() => {
+					var e = new Event('keydown');
+					//@ts-expect-error
+					e.key = 'Enter';
+					input.dispatchEvent(e);
+					const postResult = setTimeout(() => {
+						resume();
+					}, postResultTimeout);
+					cancel = () => {
+						clearTimeout(postResult);
+					};
+				}, preResultTimeout);
+				cancel = () => {
+					clearTimeout(preResult);
+				};
+			}
+		}, typingTimeout);
+		cancel = () => {
+			clearInterval(intervalId);
+		};
+	}
+
+	resume();
+</script>
+<style>
+	#qm-input {
+		font-size: 1.2em;
+	}
+</style>
