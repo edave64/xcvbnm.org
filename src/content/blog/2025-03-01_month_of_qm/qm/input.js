@@ -21,7 +21,7 @@ export function bind(input, opts = {}) {
             input.dispatchEvent(new CustomEvent('qmundo', { detail: previous }));
         }
     });
-    input.addEventListener('blur', (e) => {
+    input.addEventListener('blur', (_e) => {
         apply();
     });
     const onError = opts.onError;

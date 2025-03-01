@@ -39,7 +39,7 @@ Would be amazing if I didn't need an astro component here, but mdx freaks out wi
 
 			errors.innerHTML = text;
 		},
-		onValueChange: (val) => {
+		onValueChange: () => {
 			errors.innerHTML = '';
 		},
 		onUndo: () => {
@@ -83,7 +83,6 @@ Would be amazing if I didn't need an astro component here, but mdx freaks out wi
 	});
 
 	const errors = document.getElementById('qm-error')!;
-	input.addEventListener('qmerror', (error) => {});
 
 	function resume() {
 		currentExample++;
