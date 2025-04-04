@@ -28,4 +28,79 @@ integration, and is written in java, so it's cross platform.
 
 # Actual reverse engineering
 
+## Custom dialog
 
+First, I tried to actually understand the assembly code of the Pokémon games. Using tools like tile
+map visualization and ram watches, I found out how the dialog system in Pokémon Red works, at least
+graphically.
+
+The gameboy has two tilemaps. Let's call them A and B. The actual overworld always seems to be on
+map A. When the player initiates a dialog, all tiles at the current location are copied over to
+map B, and the dialog put on top.
+
+I assume this is done so the game can just seamlessly return to gameplay after a dialog without
+having to clean up the textbox tiles and reload the part of the map that the textbox covered.
+
+Strangely any changes manual changes to tilemap B got immediatly reversed. It appeared that the
+dialog tilemap is copied over every frame from another memory location "C490".
+
+Writing the text I want into that location, I was able to manipulate the dialog that is currently
+displayed.
+
+![A screenshot from Pokémon red with the rival stopping you in Professor Oaks lab and the textbox saying "Ich habe ne' Schnarchtüte" (A sort of non-sensical German sentence from a YTP video)](./custom_textbox.png)
+
+Interestingly, from what I've seen, both maps are actually always active. The gameboy has a
+"window", that can be used to display a section of another map at a given X Y offset. This is
+typically used to display HUDs in games.
+
+Pokémon instead uses it to display the tilemap B with the dialog above the tilemap A. Manually
+moving the window shows the actual map still underneath it, making parts of the screen look
+doubled.
+
+![A screenshot of Pokemon Red (in german) It shows the player speaking with Professor Oak, but the textbox starts too far left, since I've moved it's window layer. With it, the room appears duplicated. His two desks are drawn using the background layer, then the window layer starts and draws the whole left side of the room again. The sprites are still in their correct places, since they are not affected by tile scrolling](./window_moved.png)
+
+## Cheating
+
+import Cheating from './cheating.mp4';
+
+Since a debugger gives us a lot of power, and power corrupts, I tried to cheat at the game next.
+
+Using a memory search, I managed to find the memory location that contains the HP of the players
+pokémon. This process was similar to using cheat engine. You enter the value the HP currently
+should have, and the search finds every ram address with a matching value. Then you either heal
+or take damage, changing the HP value and search again in the remaining values. This pretty
+quickly brings you to one or two variables that could be responsible.
+
+By freezing this ram value, I was able to make my pokémon mostly invulnerable. But there were
+some strange effects because the value was still changed, it just immediatly reset.
+
+Then, I used a memory watchpoint to stop code execution when the HP value gets written to. Using
+that, I found the code that applies the damage. Replacing the "SUB" in that function with a "NOP"
+I could stop all damage from hitting my pokémon.
+
+<video controls src={Cheating} style="max-width: 100%;" alt="A Pokémon battle with a Charmander (Nicknamed 'Gloomi') battling against an enemy Squirtle. Despite the Squirtle attacking multiple times, it does no damage every time." loop muted />
+
+## Decompilation
+import './screenshot_inverter.css'
+
+I know that pokémon wasn't programmed in C, but I wanted to see if Ghidra would be able to give me
+some insight into what's happening in the code.
+
+I wanted to inject some custom text directly into the rom, so I tried to understand the routine
+that reads text from rom. I managed to "decompile" two functions that are responsible for
+displaying the borders of the textbox.
+
+<details>
+  <summary>Ghidra screenshot</summary>
+  ![A snippet of the program Ghidra, showing a function "DrawTextboxFrame" and "fillSpan" that were reverse engineered from assembly code.](./ghidra.png)
+</details>
+
+# Switching things up
+
+At this point, I decided I wasn't making the kinds of progress I wanted. With my monthly projects,
+I wanted to have something I could release every day. More importantly, I didn't feel comfortable
+enough actually reading assembly to make any significant progress.
+
+So I wanted to try something easier and work with the existing
+[pokered](https://github.com/pret/pokered) disassembly. That way I could get more used to working
+with assembly without jumping in on the deep end.
