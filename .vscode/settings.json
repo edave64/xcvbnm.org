@@ -4,5 +4,20 @@
 	"editor.formatOnSave": true,
 	"cSpell.enableFiletypes": [
 		"mdx"
-	]
+	],
+	"spellright.language": [
+		"de",
+		"en"
+	],
+	"spellright.documentTypes": [
+		"markdown",
+		"latex",
+		"plaintext",
+		"mdx"
+	],
+	"spellright.parserByClass": {
+		"mdx": {
+			"parser": "markdown"
+		}
+	}
 }
