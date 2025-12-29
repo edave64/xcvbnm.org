@@ -9,11 +9,33 @@ import { Image } from 'astro:assets';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
+		<meta name="og:type" content="article" />
+		<meta name="fediverse:creator" content="@nordern@chaos.social" />
+		<meta name="og:title" content={title} />
+		<meta name="og:description" content={description} />
+		<meta name="og:locale" content="en_US" />
+		<meta name="og:site_name" content="xcvbnm Blog" />
+		<meta name="og:url" content={canonicalURL} />
+		<meta name="og:published_time" content={pubDate.toISOString()} />
+		{
+			heroImage && (
+				<>
+					<meta property="og:image" content={heroImage.src} />
+					<meta
+						property="og:image:type"
+						content={'image/' + heroImage.format}
+					/>
+					<meta property="og:image:width" content={'' + heroImage.width} />
+					<meta property="og:image:height" content={'' + heroImage.height} />
+				</>
+			)
+		}
 		<style>
 			main {
 				width: calc(100% - 2em);
