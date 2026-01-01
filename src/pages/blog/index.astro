@@ -3,15 +3,11 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { Image } from 'astro:assets';
+import { postsFetch } from './blog';
 
-const posts = (
-	await getCollection('blog', ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	})
-).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = await postsFetch;
 ---
 
 <!doctype html>
@@ -90,12 +86,7 @@ const posts = (
 							<li>
 								<a href={`/blog/${post.slug}/`}>
 									{post.data.heroImage ? (
-										<Image
-											width={128}
-											inferSize
-											src={post.data.heroImage as any}
-											alt=""
-										/>
+										<Image width={128} inferSize src={post.data.heroImage as any} alt="" />
 									) : (
 										<div class="dummy" />
 									)}
