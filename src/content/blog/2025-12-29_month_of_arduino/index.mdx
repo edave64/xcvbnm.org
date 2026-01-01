@@ -1,0 +1,134 @@
+---
+title: 'May 2025 - Month of Arduino'
+description: "Trying to solve my sleep problems with programmable microcontrollers"
+pubDate: 2026-01-01
+heroImage: './header.svg'
+---
+
+After skipping April, I decided to pick up a pretty old project that I've had lying around for
+years. A long time ago, I wanted to get into working with electronics and microcontrollers, so I
+bought a bunch of base arduino kits, tried to make a simple clock with them, had the time desync
+after a day or two, and just gave up. (I wasn't even aware modern RTC modules could be so
+inaccurate)
+
+This month, I still didn't have a much better idea of what I wanted to do, but I thought I'd try
+to at least get something working. So I set the following goals:
+
+- Make an arduino based wake light. When the time approaches my typical wake time, it should slowly
+  turn on an LED strip.
+- Make so it can automatically fetch the current time, so it doesn't desync even with bad RTCs.
+- Give it an e-ink display to show a calendar for the new day.
+- Try and make it power efficient
+
+I think that sounded pretty reasonable, but, spoiler alert, I didn't get it all to work.
+
+The repo for this month is [here](https://github.com/edave64/wake_up).
+
+# Power struggles
+
+When trying to power the LED strip, I ran into an issue that the software world just doesn't
+prepare you for. I was using the USB connection to power the arduino, and the arduinos pins
+directly to power the LED strip. This worked fine for simple testing, but when I tried to color the
+whole strip in white, an issue occurred.
+
+import WhiteStrip from './white_strip.mp4';
+
+<video controls aria-label={"A video of an RGB LED strip being lit up one by one. It starts out " +
+                            "white, but after a few LEDs are lit, they turn red. The video ends " +
+                            "with the LEDs all lit up red."}>
+  <source src={WhiteStrip} type="video/mp4" />
+</video>
+
+As you can see, the LEDs are turning red. This is because the power supply is not supplying enough
+power. As I understand, red LEDs can run on a lower voltage than other LEDs. So those stay lit
+while all others shut off.
+
+So I decided to use an external power supply. Instead of using the USB connection. It still tints
+orange, but it's not as bad. Also, I intend to use a pure blue color for the wake light, so it
+should use less power than the white one.
+
+import ExternalPower from './external_power.mp4';
+
+<video controls aria-label={"A video of the LED strip being lit up one by one. It starts out " +
+                            "white, but after a few LEDs are lit, they turn green, then orange."}>
+  <source src={ExternalPower} type="video/mp4" />
+</video>
+
+I thought about maybe using one of those rgb LED strips that have their own power supply, and a
+remote to pick the color. Maybe I could hijack the control of that to power control the LED strip
+without much power draw on the arduino. But it worked well enough from here that I didn't bother.
+ 
+# The clock
+
+I used an arduino Mega R3 compatible board, since I wanted to use the many pins for the e-ink
+display later. It doesn't have a real time clock, so I had to use an external RTC module.
+(Visible on the breadboard in the videos above)
+
+I let it run for a day and then checked the output. It was already starting to drift, which was
+extremely disappointing. I did have the idea to maybe use some long term measurments to figure out
+how much the clock drifts over time, so I could maybe compenstate for it. But I wanted something
+useful at the end, and connecting my alarm clock to my computer regularly to check time drift
+wasn't very appealing.
+
+So I ended up switching to a Arduino UNO R4 WiFi compatible. That one has a build in RTC, and
+thanks to the wifi, it can use the
+[Network Time Protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol) to get the time from
+the internet. The idea was for it to update every day, maybe once it gets close to the wake time,
+but looking at the code, it seems I took that out at some point.
+
+There is still a serial command to make it re-fetch the time manually. But the build-in RTC seems
+to be more reliable than the external one. Still, I tried to write the code in a way that it
+supports both methods of time keeping.
+
+# The display
+
+The e-ink display wasn't too hard to get running. Although I found the documentation pretty bad, I
+did get the examples to work and could work off that.
+
+import Eink from './eink.mp4';
+
+<details>
+  <summary>WARNING: Video with rapidly flashing e-ink screen</summary>
+  <video controls aria-label={"A video showing an arduino connected to an eink display and a " +
+                              "keyboard in the background. The display flashes a few times and " +
+                              "turns white. Then a hand presses a sequence of keys, causing the " +
+                              "display to show a test image with some 'Hello World' text and " +
+                              "some shapes. Then the hand presses some more keys, causing the " +
+                              "display to flash a few times and display a test image. Again, " +
+                              "after some keypresses, the display shows something like a clock " +
+                              "screen."}>
+    <source src={Eink} type="video/mp4" />
+  </video>
+</details>
+
+Obviously, most of what's shown here are just static images. But the basics are there.
+
+# Debugging hurdles
+
+Something that ate most of my time on this project was trying to figure out issues, which I didn't
+really expect.
+
+Basically, since the arduino is running in my bedroom without any PC, I don't have any serial logs.
+And since most of the code was triggered by a specific time, they are difficult to fully debug.
+
+Most of the issues I had was that I woke up, and the lights weren't on. If I triggered them
+manually, they would work fine. Of course you can just change the alarm time while debugging,
+but having to wait for the alarm to go off was still very annoying.
+
+# Calender request
+
+This was the part where I really got stuck. For the calendar, I wanted to query Google Calendar
+for all upcoming events, and display them on the e-ink display. And at the time I couldn't wrap
+my head around how to do that a limited memory budget.
+
+Essentially, I needed to send and receive data over http, and then parse the json response. With
+preferably as little dynamic allocation as possible. And that problem essentially stunlocked me
+for the rest of the month.
+
+So since I never had data for the calendar to display, that also never got finished.
+
+# Conclusion
+
+At the month's end, all I had was an LED strip that tries to wake me up. The core of the project
+was done, but nothing more. I might continue this in the future. There's definitely a lot
+that could be done. But for now, I have some other projects in mind.

@@ -71,7 +71,7 @@ a[href^="http://"]:not(.no-arrow):not(a[href^="http://xcvbnm.org"])::after, a[hr
 	content: "⤤"
 }
 
-img {
+img, video {
 	max-width: 100%;
 	height: auto;
 	border-radius: 8px;
