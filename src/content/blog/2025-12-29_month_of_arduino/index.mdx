@@ -6,15 +6,15 @@ heroImage: './header.svg'
 ---
 
 After skipping April, I decided to pick up a pretty old project that I've had lying around for
-years. A long time ago, I wanted to get into working with electronics and microcontrollers, so I
-bought a bunch of base arduino kits, tried to make a simple clock with them, had the time desync
-after a day or two, and just gave up. (I wasn't even aware modern RTC modules could be so
+years. A long time ago, I wanted to get into working with electronics and microcontrollers, and
+bought a bunch of base Arduino kits. I tried to make a simple clock with them, had the time desync
+after a day or two, then just gave up. (I wasn't even aware modern RTC modules could be so
 inaccurate)
 
 This month, I still didn't have a much better idea of what I wanted to do, but I thought I'd try
 to at least get something working. So I set the following goals:
 
-- Make an arduino based wake light. When the time approaches my typical wake time, it should slowly
+- Make an Arduino based wake light. When the time approaches my typical wake time, it should slowly
   turn on an LED strip.
 - Make so it can automatically fetch the current time, so it doesn't desync even with bad RTCs.
 - Give it an e-ink display to show a calendar for the new day.
@@ -27,7 +27,7 @@ The repo for this month is [here](https://github.com/edave64/wake_up).
 # Power struggles
 
 When trying to power the LED strip, I ran into an issue that the software world just doesn't
-prepare you for. I was using the USB connection to power the arduino, and the arduinos pins
+prepare you for. I was using the USB connection to power the Arduino, and the Arduino's pins
 directly to power the LED strip. This worked fine for simple testing, but when I tried to color the
 whole strip in white, an issue occurred.
 
@@ -56,22 +56,22 @@ import ExternalPower from './external_power.mp4';
 
 I thought about maybe using one of those rgb LED strips that have their own power supply, and a
 remote to pick the color. Maybe I could hijack the control of that to power control the LED strip
-without much power draw on the arduino. But it worked well enough from here that I didn't bother.
+without much power draw on the Arduino. But it worked well enough from here that I didn't bother.
  
 # The clock
 
-I used an arduino Mega R3 compatible board, since I wanted to use the many pins for the e-ink
+I used an Arduino Mega R3 compatible board, since I wanted to use the many pins for the e-ink
 display later. It doesn't have a real time clock, so I had to use an external RTC module.
 (Visible on the breadboard in the videos above)
 
 I let it run for a day and then checked the output. It was already starting to drift, which was
-extremely disappointing. I did have the idea to maybe use some long term measurments to figure out
-how much the clock drifts over time, so I could maybe compenstate for it. But I wanted something
+extremely disappointing. I did have the idea to maybe use some long term measurements to figure out
+how much the clock drifts over time, so I could maybe compensate for it. But I wanted something
 useful at the end, and connecting my alarm clock to my computer regularly to check time drift
 wasn't very appealing.
 
-So I ended up switching to a Arduino UNO R4 WiFi compatible. That one has a build in RTC, and
-thanks to the wifi, it can use the
+So I ended up switching to an Arduino UNO R4 WiFi compatible. That one has a build in RTC, and
+thanks to the Wi-Fi, it can use the
 [Network Time Protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol) to get the time from
 the internet. The idea was for it to update every day, maybe once it gets close to the wake time,
 but looking at the code, it seems I took that out at some point.
@@ -89,7 +89,7 @@ import Eink from './eink.mp4';
 
 <details>
   <summary>WARNING: Video with rapidly flashing e-ink screen</summary>
-  <video controls aria-label={"A video showing an arduino connected to an eink display and a " +
+  <video controls aria-label={"A video showing an arduino connected to an e-ink display and a " +
                               "keyboard in the background. The display flashes a few times and " +
                               "turns white. Then a hand presses a sequence of keys, causing the " +
                               "display to show a test image with some 'Hello World' text and " +
@@ -108,11 +108,11 @@ Obviously, most of what's shown here are just static images. But the basics are 
 Something that ate most of my time on this project was trying to figure out issues, which I didn't
 really expect.
 
-Basically, since the arduino is running in my bedroom without any PC, I don't have any serial logs.
+Basically, since the Arduino is running in my bedroom without any PC, I don't have any serial logs.
 And since most of the code was triggered by a specific time, they are difficult to fully debug.
 
 Most of the issues I had was that I woke up, and the lights weren't on. If I triggered them
-manually, they would work fine. Of course you can just change the alarm time while debugging,
+manually, they would work fine. Of course, you can just change the alarm time while debugging,
 but having to wait for the alarm to go off was still very annoying.
 
 # Calender request
@@ -121,7 +121,7 @@ This was the part where I really got stuck. For the calendar, I wanted to query 
 for all upcoming events, and display them on the e-ink display. And at the time I couldn't wrap
 my head around how to do that a limited memory budget.
 
-Essentially, I needed to send and receive data over http, and then parse the json response. With
+Essentially, I needed to send and receive data over http, and then parse the JSON response. With
 preferably as little dynamic allocation as possible. And that problem essentially stunlocked me
 for the rest of the month.
 
