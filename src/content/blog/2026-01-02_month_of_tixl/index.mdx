@@ -1,0 +1,62 @@
+---
+title: 'July 2026 - Month of TiXL'
+description: "Pretty pixels, in real time"
+pubDate: 2026-01-02
+heroImage: './header.svg'
+---
+
+June was spend getting some things in real life in order, so there was no specific project that
+month. In retrospect, it probably changed my life for the better in very important ways, but it's
+nothing to be discussed in a blog post.
+
+Then in July, I wanted to explore a program I found a few weeks before, called TiXL. Or Tooll3, as
+I knew it as at the start. They went through a rebrand at the time which felt a little sloppy, but
+now TiXL4 is released and seems to have completed the name change.
+
+It describes itself as "software to create realtime motion graphics", but to me it just seemed like
+a modern demo-tool. I was always pretty interested in the
+[Demoscene](https://en.wikipedia.org/wiki/Demoscene) and toyed around with
+[.werkkzeug](https://www.pouet.net/prod.php?which=12511) back in the day. And tooll3 reminded me of
+that, even beyond the name similarity. ("werkzeug" is "tool" in german)
+
+So my challange this month was to create one animation with TiXL every day. I didn't quite manage
+that, but did some other things with it that I hope you can agree were even better :)
+
+Except day 1, I just actually missed the start of the month.
+
+All the codes are available under CC0 on my
+[github](https://github.com/edave64/2025-07-month-of-tixl.git). Just copy them and paste them into
+the editor.
+
+# Day 2
+
+import Day2 from './day02.mp4';
+import Day2Poster from './day02.avif';
+
+<video controls poster={Day2Poster.src} aria-label={"Two untextured cubes rotating in different " +
+                            "directions. They are in the same position, and are interleaved " +
+                            "radial stripes from the bottom center."} preload="none">
+  <source src={Day2} type="video/mp4" /> 
+</video>
+
+For the first one, I just experimented a bit with blending different 3D scenes. That's not
+something I could have done as easily in programs like blender. I don't remember if werkkzeug could
+trivially do that.
+
+# Day 3
+
+import Day3 from './day03.mp4';
+import Day3Poster from './day03.avif';
+
+<video aria-label={"A grid of brown triangles on an orange background. They spin around once, " +
+                   "reforming a perfect grid. Then, seamlessly, the orange triangle spin around " +
+                   "on a brown background."} preload="none" controls poster={Day3Poster.src} loop>
+  <source src={Day3} type="video/mp4" /> 
+</video>
+
+This is actually the improved version I made a two days later. The original was black and white,
+creating a very harsh contrast, and didn't line up perfectly. The repo still has the original form.
+
+But the fixed version has a really nice hypnotic effect.
+
+# Day 4
