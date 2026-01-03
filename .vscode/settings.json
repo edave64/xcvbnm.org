@@ -2,6 +2,9 @@
 	"editor.defaultFormatter": "astro-build.astro-vscode",
 	"editor.formatOnPaste": true,
 	"editor.formatOnSave": true,
+	"editor.rulers": [
+		100
+	],
 	"cSpell.enableFiletypes": [
 		"mdx"
 	],
@@ -19,5 +22,7 @@
 		"mdx": {
 			"parser": "markdown"
 		}
-	}
+	},
+	"editor.minimap.maxColumn": 110,
+	"editor.minimap.renderCharacters": false
 }

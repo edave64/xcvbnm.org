@@ -1,7 +1,7 @@
 ---
 title: 'July 2026 - Month of TiXL'
 description: "Pretty pixels, in real time"
-pubDate: 2026-01-02
+pubDate: 2026-01-03
 heroImage: './header.svg'
 ---
 
@@ -59,4 +59,424 @@ creating a very harsh contrast, and didn't line up perfectly. The repo still has
 
 But the fixed version has a really nice hypnotic effect.
 
-# Day 4
+# Day 4 - The big question
+
+import Day4 from './day04.mp4';
+import Day4Poster from './day04.avif';
+
+<video aria-label={"A group of 3 x 3 x 3 cubes in a grid, rotating. They is a static grid of " +
+                   "squares above them as a kind of cut-out. The whole construction seems to be " +
+                   "flying through an orange wireframe torus. On top, text appears that says: " +
+                   "'Why are you watching this instead of booping cats?'."} preload="none" controls
+                   loop poster={Day4Poster.src}>
+  <source src={Day4} type="video/mp4" /> 
+</video>
+
+I always liked the effect of flying through a torus. Here I did some more toying with masking and
+working with strings. Also had to do some math to make the flight through the torus loop seamlessly.
+
+# Day 5 - Tides
+
+import Day5 from './day05.mp4';
+import Day5Poster from './day05.avif';
+
+<video aria-label={"A floor made of hexagonal tiles with a black center and a white, shimmering " +
+                   "border. A blurry, out of focus moon flies above from left to right. " +
+                   "Following behind it, the tiles rise up like a tidal wave. after it passes, " +
+                   "the tiles settle back down."} preload="none" controls loop
+                   poster={Day5Poster.src}> 
+  <source src={Day5} type="video/mp4" /> 
+</video>
+
+This one looks kinda goofy, it was made in a bit of a hurry, since I was visiting relatives that
+day. I couldn't get the moon to look like a moon, so I just blurred it.
+
+In retrospect, maybe this is fixable. Add some little, permanent movement to the tiles, and retry
+those clouds that currently look more like inflatable arms.
+
+# Day 6 - Flow
+
+import Day6 from './day06.mp4';
+import Day6Poster from './day06.avif';
+
+<video aria-label={"A light blue wave moving from left to right on a blue background, spreading " +
+                   "out similar to a liquid. In the middle, it hits some text that only becomes " +
+                   "visible through the waves around it. It spells \"Trink Semi-Cola\" (\"Drink  " +
+                   "semi-cola\")"} preload="none" controls loop
+                   poster={Day6Poster.src}> 
+  <source src={Day6} type="video/mp4" /> 
+</video>
+
+Just toying around a bit with the fluid feedback operator.
+
+# Day 7 + Day 8 - Echo
+
+import Day7 from './day07+08.mp4';
+import Day7Poster from './day07+08.avif';
+
+<video aria-label={"Two gray circles on a black background. The left one slowly becomes white " + 
+                   "and grows, then emits a ring around it, which hits the second circle, which " +
+                   "starts glowing the same way, and then emits the same ring around it. " +
+                   "Afterwards, many small rings in the backgrounds grow and fade out."}
+                   preload="none" controls loop poster={Day7Poster.src}> 
+  <source src={Day7} type="video/mp4" /> 
+</video>
+
+This one kinda sucks. I tried to make a more complex sequence of animations, but my timing was off.
+But I did find and report [a bug](https://github.com/tixl3d/tixl/issues/703) while making it, so I
+guess thats some hidden merrit.
+
+# Day 9 - Bloom
+
+import Day9 from './day09.mp4';
+import Day9Poster from './day09.avif';
+
+<video aria-label={"Six flower petals that open up. They are drawn as yellow wireframes. The " + 
+                   "camera is slowly orbiting around them."} preload="none" controls
+       poster={Day9Poster.src}> 
+  <source src={Day9} type="video/mp4" /> 
+</video>
+
+I originally tried to make a whole flower opening, but once I got done making the petals in blender,
+they had some rendering issues, probably because I'm not great at the whole topology thing.
+
+So I made them wireframe to hide the badness ^^'.
+
+But overall, I think it looks quite nice, maybe a little aliased.
+
+# Day 10 - Sparks
+
+import Day10 from './day10.mp4';
+import Day10Poster from './day10.avif';
+
+<video aria-label={"A camera orbiting around two metal spheres. They move towards each other, " + 
+                   "collide in the middle, emit sparks and bounce backwards. As they loose " +
+                   "energy they keep bouncing less, until they are completely touching."}
+       preload="none" controls loop poster={Day10Poster.src}> 
+  <source src={Day10} type="video/mp4" /> 
+</video>
+
+This one is quite neat. I couldn't figure out how to animate well with curves, so I this is held
+together with some quite janky math.
+
+I also tried to add some lighting, but it behaves really unintuitively. For some reason it seemed to
+become stronger the further it is away?
+
+# Day 11 - Glide
+
+import Day11 from './day11.mp4';
+import Day11Poster from './day11.avif';
+
+<video aria-label={"A bunch of white particles blowing to the right, leaving behind a bronze " +
+                   "sphere. Reminiscent of a seeds blowing of a dandelion."}
+       preload="none" controls poster={Day11Poster.src}> 
+  <source src={Day11} type="video/mp4" /> 
+</video>
+
+This was meant to be a dandelion, and I wanted the camera to track one of the seeds and follow it.
+But I didn't get that to work, so in the end I was left with this pretty bare-bones animation.
+
+# Day 12
+
+import Day12 from './day12.mp4';
+import Day12Poster from './day12.avif';
+
+<video aria-label={"A kaleidoscope like effect. It starts out with a dark greenish-yellow color. " +
+                   "multiple amber lines appear in a triangular pattern, becoming thinner but " + 
+                   "also more and closer together, until the whole image is amber. Then the " +
+                   "animation reverses. Over the animation is a crt-like filter."}
+       preload="none" controls loop poster={Day12Poster.src}> 
+  <source src={Day12} type="video/mp4" /> 
+</video>
+
+I found this effect and thought it looked neat. It originally had a fairly harsh transition between
+black and white, but I didn't like looking at that, so I cranked down the contrast and slowed down
+the middle section.
+
+# Day 13
+
+import Day13 from './day13.mp4';
+import Day13Poster from './day13.avif';
+
+<video aria-label={"A sphere floating over a pyramid shaped pedestal with a spherical cutout. " +
+                   "The sphere pulsates. The the base of the pedestal morphes into a octagonal " +
+                   "shape. The sphere stops pulsing, then morphs into blobs that get smaller and " +
+                   "smaller, disperse and vanishes. The pedestal morphes back, and a new sphere " +
+                   "grows out of nowhere."}
+       preload="none" controls loop poster={Day13Poster.src}> 
+  <source src={Day13} type="video/mp4" /> 
+</video>
+
+Just toying a little with [SDFs](https://en.wikipedia.org/wiki/Signed_distance_function). I like how
+it can create such smooth geometry on the fly. But it does tend to glitch out in some situations.
+
+# Day 14 / 15 - Bouncy Outline
+
+import Day15 from './day14+15.mp4';
+import Day15Poster from './day14+15.avif';
+
+<video aria-label={"A monochrome with an outline cube rotating. After a few spins, it suddenly " +
+                   "stops, and the outline continues to rotate a little and jiggles back into " +
+                   "place. The background is a hexagonal grid. The whole image is tinted pink."}
+       preload="none" controls loop poster={Day15Poster.src}> 
+  <source src={Day15} type="video/mp4" /> 
+</video>
+
+Again, an animation that I made on one day and improved on the second. The improvement was possible
+because the bug with TriggerAnim that I reported earlier was fixed. And it turns out, TriggerAnim
+has a curve for this exact bounce effect.
+
+# Day 16
+
+import Day16 from './day16.mp4';
+import Day16Poster from './day16.avif';
+
+<video aria-label={"A bunch of points in the shape of a sphere. They are rotating randomly " +
+                   "around the center. At some point they seem to randomly crash towards the " +
+                   "center, then reorder into their sphere form. Then the video loops."}
+       preload="none" controls loop poster={Day16Poster.src}> 
+  <source src={Day16} type="video/mp4" /> 
+</video>
+
+This used the point trail effect, but unfortunatly, that needs information from previous frames. So
+unlike a lot of other effects, you can't just start it at some random time. The effect will start
+over if you change the time value.
+
+Unfortunatly, that also means the point trails won't exist on frame 1. There is no option for a
+"warm start", where you can process a range of frames without adding them to the render.
+
+So instead, I rendered the loop twice, then used blender as a video editor to cut it in half.
+
+# Day 17
+
+import Day17 from './day17.mp4';
+import Day17Poster from './day17.avif';
+
+<video aria-label={"Three concentric orange floating torus segments, rotating in different " +
+                   "directions and changing in size. The scene is lit from behind with a " +
+                   "pink/purple light, casting heavy god-rays."}
+       preload="none" controls loop poster={Day17Poster.src}> 
+  <source src={Day17} type="video/mp4" /> 
+</video>
+
+Playing a little more with godrays. Also SDFs, because the torus mesh generator cannot create
+end-caps, so you would be able to look into the model.
+
+# Day 18
+
+import Day18 from './day18.mp4';
+import Day18Poster from './day18.avif';
+
+<video aria-label={"A looping animation. A view from inside a dark blue cube rotating. On the " +
+                   "right side, there is a rectangular cylinder that twists and untwists. Unlike " +
+                   "the background it has heavy chromatic aberration and seems to have a harsh " +
+                   "drop shadow, disconnected from the actual background"} controls loop
+       preload="none" poster={Day18Poster.src}> 
+  <source src={Day18} type="video/mp4" /> 
+</video>
+
+I was going for something that you might actually see in a demo. For some reason, this fit the bill.
+Just image a scroller moving down on the right.
+
+# Day 19 - Blub
+
+import Day19 from './day19.mp4';
+import Day19Poster from './day19.avif';
+
+<video aria-label={"A looping animation. It shows an underwater scene. A group of multicolored " +
+                   "fishes swim from left to right past the camera, and a column of bubbles " +
+                   "rises from the bottom."} preload="none" controls loop poster={Day19Poster.src}> 
+  <source src={Day19} type="video/mp4" /> 
+</video>
+
+Inspired by the old aquarium screen-saver in windows. Messing with particle systems seems pretty
+unpredictable. In the preview, the fishes will move fast enough to reach the end, then you try to
+render it and they fall short. :/
+
+# Day 20 - Distance Fields
+
+import Day20 from './day20.mp4';
+import Day20Poster from './day20.avif';
+
+<video aria-label={"A rotating, rounded purple cube. Around each axis there are lines tracing " +
+                   "the outline of the cube to infinity."} preload="none" poster={Day20Poster.src}
+       controls loop> 
+  <source src={Day20} type="video/mp4" /> 
+</video>
+
+This effect is actually a debug visualization of the SDFs. But it looked neat, so I made this from
+it.
+
+# Day 21 - Visualization
+
+import Day21 from './day21.mp4';
+import Day21Poster from './day21.avif';
+
+<video aria-label={"A music visualization with 32 blue bars in a ring with their height changing " +
+                   "to the music. In the background is a blue glow that raises with volume. " +
+                   "There are specs around it that glow with frequency changes."} preload="none"
+       poster={Day21Poster.src} controls loop> 
+  <source src={Day21} type="video/mp4" /> 
+</video>
+
+Music: [Acid Tunnel of Love](https://www.youtube.com/watch?v=nLc0RvWdKjY) from DELTARUNE Chapter 2
+by Toby Fox
+
+I wasn't expecting TiXL to have tools for this, but apperently it has tools build for it's build for
+VJ-ing, so it can just give you waveform data.
+
+I chose the song because it was first in the deltarune music folder. :P
+
+# Day 22 - Feedback
+
+import Day22 from './day22.mp4';
+import Day22Poster from './day22.avif';
+
+<video aria-label={"On a black screen, a blue square appears and grows larger. In that square " +
+                   "appears another black square, in that another blue square, ad infinitum. " +
+                   "Suddenly the rectangle rotates, showing it to be a cube displaying it's own " +
+                   "blue-inverted image. It rotates once to the left and once to the top, than " +
+                   "aligns again with the camera so it looks like squares again, an zooms back " +
+                   "out."} preload="none" poster={Day22Poster.src} controls loop> 
+  <source src={Day22} type="video/mp4" /> 
+</video>
+
+I initially thought that would be impossible, since the rendering graph is directed. So you can't
+just use the finished render as an input for an earlier stage. But it has a workaround called a
+texture reference, that can connect to the render node as an input and gets the last rendered frame
+from that.
+
+# Day 23 - Understanding displacement
+
+import Day23 from './day23.mp4';
+import Day23Poster from './day23.avif';
+
+<video aria-label={"A rotating cube with a checkerboard pattern with a slowly rotating wire " +
+                   "frame sphere in the background. Lines are slowly rising from the bottom, " +
+                   "that displace the image of the cube. The further they wander up, the more " +
+                   "lines appear, until they all fade out."} preload="none" poster={Day23Poster.src}
+       controls loop> 
+  <source src={Day23} type="video/mp4" /> 
+</video>
+
+I know in concept how displacement maps work, but the concept always trips me up somewhat. So I made
+this to try different kinds on displacement values.
+
+# Day 24 - Multiple Cameras
+
+import Day24 from './day24.mp4';
+import Day24Poster from './day24.avif';
+
+<video aria-label={"A stack a lot of dozens of bars with cylinders on each end. Each element is " +
+                   "rotating around the center, switching between all of them being completely " +
+                   "in line and being twisted like a helix. In the background is a random, " +
+                   "purple, polygonal mesh."} preload="none" poster={Day24Poster.src} controls loop> 
+  <source src={Day24} type="video/mp4" /> 
+</video>
+
+Tried to make a more complex scene with multiple cameras. Unfortunatly, lighting still eludes me.
+The metal looks as it should in the first cut, but is just not shiny in the other cuts, even though
+it's exactly the same scene.
+
+The background is inspired from a material in the Kewlers Demo
+[Variform](https://www.youtube.com/watch?v=pUHEa6Avj-A) from 2002.
+
+# Day 25 - Quantization
+
+import Day25 from './day25.mp4';
+import Day25Poster from './day25.avif';
+
+<video aria-label={"Green cubes randomly floating through a blue-green void. They have a " +
+                   "dithering pattern on them. While the camera moves at 60fps, the cubes move " +
+                   "at 10fps, but some animate on different frames than others."} preload="none"
+       poster={Day25Poster.src} controls loop> 
+  <source src={Day25} type="video/mp4" /> 
+</video>
+
+I was making a fairly simple animation. Then a friend suggested "Quantization" as a theme. So I
+altered the animation to fit that theme better. Animation nodes have a time input, so you can make
+take the real time input and alter it. Using that, I made it so these cubes all animate at 10fps.
+
+But, there are two sets of cubes, and they animate offset from each other.
+
+# Day 26 - Public service announcement
+
+import Day26 from './day26.mp4';
+import Day26Poster from './day26.avif';
+
+<video aria-label={"The text 'Katze' ('Cat' in german) written in some glowing, shimmering and " +
+                   "bright material. Along the text are many tiny peaks, almost like spikes. The " +
+                   "text rotates and changes color from red to yellow to green to blue to purple " +
+                   "to red again."} preload="none" poster={Day26Poster.src} controls loop> 
+  <source src={Day26} type="video/mp4" /> 
+</video>
+
+Worked with splines for a little bit. I probably could have made that quite a bit better. Instead,
+I placed all the splines by hand to match a reference image.
+
+# Day 27 - Scatter
+
+import Day27 from './day27.mp4';
+import Day27Poster from './day27.avif';
+
+<video aria-label={"A lot of triangles with random rotations. Depending on the angle they range " +
+                   "from white black. After rotating a bit, they all form a sphere from the " +
+                   "inside, with wire frame lines appearing as they are perfectly lined up. Then " +
+                   "they randomly rotate away again."} preload="none" poster={Day27Poster.src}
+       controls loop> 
+  <source src={Day27} type="video/mp4" /> 
+</video>
+
+I really like this one. I've learend some techniques in the days after to make the point where the
+animation reverses less obvious, but I still think it looks pretty good.
+
+# Day 28
+
+No animation that day. Instead, I made [a PR](https://github.com/tixl3d/tixl/pull/718) for TiXL. It
+had a new project hub, and that was sorted based on the default file-system sorting from windows.
+Which was typically by creation date, with the oldest projects first.
+
+After some back and forth, I made it sort by last modification date descending instead.
+
+There was a bug with autosave in that implementation later, but
+[I fixed that](https://github.com/tixl3d/tixl/pull/733) later.
+
+# Day 29 - Containment
+
+import Day29 from './day29.mp4';
+import Day29Poster from './day29.avif';
+
+<video aria-label={"A glass cube. The camera is rotating around it. In the background are " +
+                   "glowing white squares. Inside the cube are black spots with white outlines " +
+                   "that start in a regular grid and then move around randomly inside the cube, " +
+                   "until the they quickly return to their grid position."} preload="none" 
+       poster={Day29Poster.src} controls loop> 
+  <source src={Day29} type="video/mp4" /> 
+</video>
+
+I wanted to make something that looks like glass. Then I just through a lot of post-fx at it.
+
+# Day 30
+
+[Another PR this day](https://github.com/tixl3d/tixl/pull/720). It fixes a problem with spaces in
+pathnames.
+
+# Day 31 - Foggy
+
+import Day31 from './day31.mp4';
+import Day31Poster from './day31.avif';
+
+<video aria-label={"A bunch of random, spikey shapes an a purple fog. They are randomly " +
+                   "deforming. A fog is hanging around it. A bright light is shining through it " +
+                   "from behind."} preload="none" poster={Day31Poster.src} controls loop> 
+  <source src={Day31} type="video/mp4" /> 
+</video>
+
+This is inspired by another user in the TiXL discord. I wanted something like a volumetric fog
+effect, but TiXL didn't have that. Instead I used godrays and perlin noise billboards to fake it.
+
+# Conclusion
+
+This was really fun. I hope I get to make a whole demo with this tool someday. And I love that I
+could contribute, even if just a litte. The project is set up really great. It's trivial to get it
+up and running on your own development system.
