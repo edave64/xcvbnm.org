@@ -5,7 +5,7 @@ pubDate: 2026-01-03
 heroImage: './header.svg'
 ---
 
-June was spend getting some things in real life in order, so there was no specific project that
+June was spent getting some things in real life in order, so there was no specific project that
 month. In retrospect, it probably changed my life for the better in very important ways, but it's
 nothing to be discussed in a blog post.
 
@@ -17,15 +17,15 @@ It describes itself as "software to create realtime motion graphics", but to me 
 a modern demo-tool. I was always pretty interested in the
 [Demoscene](https://en.wikipedia.org/wiki/Demoscene) and toyed around with
 [.werkkzeug](https://www.pouet.net/prod.php?which=12511) back in the day. And tooll3 reminded me of
-that, even beyond the name similarity. ("werkzeug" is "tool" in german)
+that, even beyond the name similarity. ("werkzeug" is "tool" in German)
 
-So my challange this month was to create one animation with TiXL every day. I didn't quite manage
+So my challenge this month was to create one animation with TiXL every day. I didn't quite manage
 that, but did some other things with it that I hope you can agree were even better :)
 
 Except day 1, I just actually missed the start of the month.
 
 All the codes are available under CC0 on my
-[github](https://github.com/edave64/2025-07-month-of-tixl.git). Just copy them and paste them into
+[GitHub](https://github.com/edave64/2025-07-month-of-tixl.git). Just copy them and paste them into
 the editor.
 
 # Day 2
@@ -40,7 +40,7 @@ import Day2Poster from './day02.avif';
 </video>
 
 For the first one, I just experimented a bit with blending different 3D scenes. That's not
-something I could have done as easily in programs like blender. I don't remember if werkkzeug could
+something I could have done as easily in programs like blender. I don't remember if .werkkzeug could
 trivially do that.
 
 # Day 3
@@ -124,7 +124,7 @@ import Day7Poster from './day07+08.avif';
 
 This one kinda sucks. I tried to make a more complex sequence of animations, but my timing was off.
 But I did find and report [a bug](https://github.com/tixl3d/tixl/issues/703) while making it, so I
-guess thats some hidden merrit.
+guess that's some hidden merit.
 
 # Day 9 - Bloom
 
@@ -156,7 +156,7 @@ import Day10Poster from './day10.avif';
   <source src={Day10} type="video/mp4" /> 
 </video>
 
-This one is quite neat. I couldn't figure out how to animate well with curves, so I this is held
+This one is quite neat. I couldn't figure out how to animate well with curves, so this is held
 together with some quite janky math.
 
 I also tried to add some lighting, but it behaves really unintuitively. For some reason it seemed to
@@ -199,9 +199,9 @@ import Day13 from './day13.mp4';
 import Day13Poster from './day13.avif';
 
 <video aria-label={"A sphere floating over a pyramid shaped pedestal with a spherical cutout. " +
-                   "The sphere pulsates. The the base of the pedestal morphes into a octagonal " +
+                   "The sphere pulsates. The the base of the pedestal morphs into a octagonal " +
                    "shape. The sphere stops pulsing, then morphs into blobs that get smaller and " +
-                   "smaller, disperse and vanishes. The pedestal morphes back, and a new sphere " +
+                   "smaller, disperse and vanishes. The pedestal morphs back, and a new sphere " +
                    "grows out of nowhere."}
        preload="none" controls loop poster={Day13Poster.src}> 
   <source src={Day13} type="video/mp4" /> 
@@ -238,11 +238,11 @@ import Day16Poster from './day16.avif';
   <source src={Day16} type="video/mp4" /> 
 </video>
 
-This used the point trail effect, but unfortunatly, that needs information from previous frames. So
-unlike a lot of other effects, you can't just start it at some random time. The effect will start
-over if you change the time value.
+This used the point trail effect, which needs information from previous frames. So unlike a lot of
+other effects, you can't just start it at some random time. The effect will start over if you change
+the time value.
 
-Unfortunatly, that also means the point trails won't exist on frame 1. There is no option for a
+Unfortunately, that also means the point trails won't exist on frame 1. There is no option for a
 "warm start", where you can process a range of frames without adding them to the render.
 
 So instead, I rendered the loop twice, then used blender as a video editor to cut it in half.
@@ -259,8 +259,8 @@ import Day17Poster from './day17.avif';
   <source src={Day17} type="video/mp4" /> 
 </video>
 
-Playing a little more with godrays. Also SDFs, because the torus mesh generator cannot create
-end-caps, so you would be able to look into the model.
+Playing a little more with god-rays. And SDFs because the torus mesh generator cannot create
+end-caps for incomplete tori, so you would be able to look into the model.
 
 # Day 18
 
@@ -276,7 +276,7 @@ import Day18Poster from './day18.avif';
 </video>
 
 I was going for something that you might actually see in a demo. For some reason, this fit the bill.
-Just image a scroller moving down on the right.
+Just imagine a scroller moving down on the right.
 
 # Day 19 - Blub
 
@@ -322,7 +322,7 @@ import Day21Poster from './day21.avif';
 Music: [Acid Tunnel of Love](https://www.youtube.com/watch?v=nLc0RvWdKjY) from DELTARUNE Chapter 2
 by Toby Fox
 
-I wasn't expecting TiXL to have tools for this, but apperently it has tools build for it's build for
+I wasn't expecting TiXL to have tools for this, but apparently it has tools build for it's build for
 VJ-ing, so it can just give you waveform data.
 
 I chose the song because it was first in the deltarune music folder. :P
@@ -341,7 +341,7 @@ import Day22Poster from './day22.avif';
   <source src={Day22} type="video/mp4" /> 
 </video>
 
-I initially thought that would be impossible, since the rendering graph is directed. So you can't
+I initially thought this would be impossible, since the rendering graph is directed. So you can't
 just use the finished render as an input for an earlier stage. But it has a workaround called a
 texture reference, that can connect to the render node as an input and gets the last rendered frame
 from that.
@@ -359,8 +359,8 @@ import Day23Poster from './day23.avif';
   <source src={Day23} type="video/mp4" /> 
 </video>
 
-I know in concept how displacement maps work, but the concept always trips me up somewhat. So I made
-this to try different kinds on displacement values.
+I know in concept how displacement maps work, but it always trips me up somewhat. So I made this to
+try different kinds on displacement values.
 
 # Day 24 - Multiple Cameras
 
@@ -374,7 +374,7 @@ import Day24Poster from './day24.avif';
   <source src={Day24} type="video/mp4" /> 
 </video>
 
-Tried to make a more complex scene with multiple cameras. Unfortunatly, lighting still eludes me.
+Tried to make a more complex scene with multiple cameras. Unfortunately, lighting still eludes me.
 The metal looks as it should in the first cut, but is just not shiny in the other cuts, even though
 it's exactly the same scene.
 
@@ -394,8 +394,8 @@ import Day25Poster from './day25.avif';
 </video>
 
 I was making a fairly simple animation. Then a friend suggested "Quantization" as a theme. So I
-altered the animation to fit that theme better. Animation nodes have a time input, so you can make
-take the real time input and alter it. Using that, I made it so these cubes all animate at 10fps.
+altered the animation to fit that theme better. Animation nodes have a time input, so you can take
+the real time input and alter it. Using that, I made it so these cubes all animate at 10fps.
 
 But, there are two sets of cubes, and they animate offset from each other.
 
@@ -411,8 +411,8 @@ import Day26Poster from './day26.avif';
   <source src={Day26} type="video/mp4" /> 
 </video>
 
-Worked with splines for a little bit. I probably could have made that quite a bit better. Instead,
-I placed all the splines by hand to match a reference image.
+Worked with splines for a little bit. I probably could have made it quite a bit easier. Instead, I
+placed all the splines by hand to match a reference image.
 
 # Day 27 - Scatter
 
@@ -427,7 +427,7 @@ import Day27Poster from './day27.avif';
   <source src={Day27} type="video/mp4" /> 
 </video>
 
-I really like this one. I've learend some techniques in the days after to make the point where the
+I really like this one. I've learned some techniques in the days after to make the point where the
 animation reverses less obvious, but I still think it looks pretty good.
 
 # Day 28
@@ -438,7 +438,7 @@ Which was typically by creation date, with the oldest projects first.
 
 After some back and forth, I made it sort by last modification date descending instead.
 
-There was a bug with autosave in that implementation later, but
+There was a bug with autosave in that implementation, but
 [I fixed that](https://github.com/tixl3d/tixl/pull/733) later.
 
 # Day 29 - Containment
@@ -459,24 +459,24 @@ I wanted to make something that looks like glass. Then I just through a lot of p
 # Day 30
 
 [Another PR this day](https://github.com/tixl3d/tixl/pull/720). It fixes a problem with spaces in
-pathnames.
+path names.
 
 # Day 31 - Foggy
 
 import Day31 from './day31.mp4';
 import Day31Poster from './day31.avif';
 
-<video aria-label={"A bunch of random, spikey shapes an a purple fog. They are randomly " +
+<video aria-label={"A bunch of random, spiky shapes an a purple fog. They are randomly " +
                    "deforming. A fog is hanging around it. A bright light is shining through it " +
                    "from behind."} preload="none" poster={Day31Poster.src} controls loop> 
   <source src={Day31} type="video/mp4" /> 
 </video>
 
 This is inspired by another user in the TiXL discord. I wanted something like a volumetric fog
-effect, but TiXL didn't have that. Instead I used godrays and perlin noise billboards to fake it.
+effect, but TiXL didn't have that. Instead, I used god-rays and Perlin noise billboards to fake it.
 
 # Conclusion
 
 This was really fun. I hope I get to make a whole demo with this tool someday. And I love that I
-could contribute, even if just a litte. The project is set up really great. It's trivial to get it
+could contribute, even if just a little. The project is set up really great. It's trivial to get it
 up and running on your own development system.
