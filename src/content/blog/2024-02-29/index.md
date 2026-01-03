@@ -3,6 +3,7 @@ title: 'Hello world'
 description: 'Hi and stuff'
 pubDate: 2024-02-29
 heroImage: './header.svg'
+ogImage: './header.webp'
 ---
 
 This is the latest attempt to finally start writing a blog again, instead of just developing
